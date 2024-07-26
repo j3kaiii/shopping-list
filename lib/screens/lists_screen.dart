@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/widgets/buttons.dart';
+import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/widgets/bottom_panel.dart';
+import 'package:shopping_list_example/widgets/list_item.dart';
+import 'package:shopping_list_example/widgets/stub.dart';
 
 /// Экран списков продуктов.
 class ListsScreen extends StatefulWidget {
@@ -34,13 +37,9 @@ class _ListsScreenState extends State<ListsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My lists'),
-        centerTitle: true,
-        backgroundColor: Colors.lightBlue,
-      ),
-      body: LayoutBuilder(
+    return CommonContentScreen(
+      title: 'My lists',
+      child: LayoutBuilder(
         builder: (context, cts) {
           return Stack(
             children: [
@@ -53,7 +52,14 @@ class _ListsScreenState extends State<ListsScreen> {
               PositionedDirectional(
                 end: 8,
                 bottom: 8,
-                child: _buildBottonPanel(context, cts.maxWidth),
+                child: BottomPanel(
+                  isAdding: _isCreating,
+                  onAddPressed: _onAddPressed,
+                  onCancel: _onCancel,
+                  panelWidth: cts.maxWidth - 46,
+                  textController: _textController,
+                  validator: (value) => _validate(value),
+                ),
               ),
             ],
           );
@@ -62,48 +68,10 @@ class _ListsScreenState extends State<ListsScreen> {
     );
   }
 
-  Widget _buildBottonPanel(BuildContext context, double width) {
-    final addButton = AddButton(
-      onPressed: _onAddPressed,
-      inProgress: _isCreating,
-    );
-
-    if (_isCreating) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _textController,
-              autofocus: true,
-              validator: (value) => _validate(value),
-              autovalidateMode: AutovalidateMode.always,
-              decoration: InputDecoration(
-                hintText: 'Create name',
-                constraints: BoxConstraints(maxWidth: width - 46),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CancelButton(onPressed: _onCancel),
-              const SizedBox(width: 12),
-              addButton,
-            ],
-          )
-        ],
-      );
-    } else {
-      return addButton;
-    }
-  }
-
   String? _validate(String? input) {
     if (input == null || input.isEmpty) {
       return 'empty name';
-    } else if (_listsBox.containsKey(input)) {
+    } else if (_listsBox.values.contains(input)) {
       return 'name already exists';
     }
     return null;
@@ -138,36 +106,21 @@ class _ListsScreenState extends State<ListsScreen> {
     return ValueListenableBuilder(
       valueListenable: _listsBox.listenable(),
       builder: ((context, value, _) {
-        final count = value.values.length;
-
-        if (count < 1) return _buildStab(context);
         final lists = value.values.toList();
 
+        if (lists.isEmpty) return const Stub('no lists');
+
         return ListView.builder(
-          itemCount: count,
-          itemBuilder: (context, index) =>
-              _buildListItem(context, lists[index]),
+          itemCount: lists.length,
+          itemBuilder: (context, index) => ListItem(
+            name: lists[index],
+            onTap: () => context.goNamed(
+              shoppingName,
+              pathParameters: {shoppingParams: lists[index]},
+            ),
+          ),
         );
       }),
-    );
-  }
-
-  Widget _buildStab(BuildContext context) {
-    return const Center(
-      child: Text('No lists'),
-    );
-  }
-
-  Widget _buildListItem(BuildContext context, String listName) {
-    return InkWell(
-      onTap: () => context
-          .goNamed(shoppingName, pathParameters: {shoppingParams: listName}),
-      child: Card.outlined(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(listName),
-        ),
-      ),
     );
   }
 }

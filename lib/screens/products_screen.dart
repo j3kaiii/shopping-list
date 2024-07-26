@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
-import 'package:shopping_list_example/widgets/buttons.dart';
+import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/widgets/bottom_panel.dart';
+import 'package:shopping_list_example/widgets/stub.dart';
 
 /// Экран выбора продуктов.
 ///
@@ -14,13 +16,9 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('All products'),
-        centerTitle: true,
-        backgroundColor: Colors.lightBlue,
-      ),
-      body: FutureBuilder(
+    return CommonContentScreen(
+      title: 'All products',
+      child: FutureBuilder(
           future: Hive.openBox<String>(productsBoxName),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -51,12 +49,14 @@ class ProductsContent extends StatefulWidget {
 
 class _ProductsContentState extends State<ProductsContent> {
   late final TextEditingController _textController;
+  late final Box<String> _productsBox;
   bool _isAdding = false;
 
   @override
   void initState() {
     super.initState();
     _textController = TextEditingController();
+    _productsBox = widget.productsBox;
   }
 
   @override
@@ -80,7 +80,14 @@ class _ProductsContentState extends State<ProductsContent> {
             PositionedDirectional(
               end: 8,
               bottom: 8,
-              child: _buildBottonPanel(context, cts.maxWidth),
+              child: BottomPanel(
+                isAdding: _isAdding,
+                onAddPressed: _onAddPressed,
+                onCancel: _onCancel,
+                panelWidth: cts.maxWidth - 46,
+                textController: _textController,
+                validator: (value) => _validate(value),
+              ),
             ),
           ],
         );
@@ -88,43 +95,8 @@ class _ProductsContentState extends State<ProductsContent> {
     );
   }
 
-  Widget _buildBottonPanel(BuildContext context, double width) {
-    final addButton = AddButton(
-      onPressed: _onAddPressed,
-      inProgress: _isAdding,
-    );
-
-    if (_isAdding) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _textController,
-              autofocus: true,
-              // validator: (value) => _validate(value),
-              autovalidateMode: AutovalidateMode.always,
-              decoration: InputDecoration(
-                hintText: 'Create name',
-                constraints: BoxConstraints(maxWidth: width - 46),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CancelButton(onPressed: _onCancel),
-              const SizedBox(width: 12),
-              addButton,
-            ],
-          )
-        ],
-      );
-    } else {
-      return addButton;
-    }
-  }
+  String? _validate(String? value) =>
+      _productsBox.values.contains(value) ? 'Already exist' : null;
 
   void _onCancel() {
     setState(() {
@@ -148,17 +120,11 @@ class _ProductsContentState extends State<ProductsContent> {
     }
   }
 
-  Widget _buildStab(BuildContext context) {
-    return const Center(
-      child: Text('No lists'),
-    );
-  }
-
   Widget _buildProuductsList(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.productsBox.listenable(),
       builder: (context, value, _) => value.isEmpty
-          ? _buildStab(context)
+          ? const Stub('no products')
           : ListView.builder(
               itemCount: value.length,
               itemBuilder: (context, index) {

@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
+import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/widgets/list_item.dart';
+import 'package:shopping_list_example/widgets/stub.dart';
 
 /// Экран списка продуктов.
 ///
@@ -52,13 +55,9 @@ class _ShoppingContentState extends State<ShoppingContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.listName),
-        centerTitle: true,
-        backgroundColor: Colors.lightBlue,
-      ),
-      body: Padding(
+    return CommonContentScreen(
+      title: widget.listName,
+      child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
           height: double.maxFinite,
@@ -96,39 +95,17 @@ class _ShoppingContentState extends State<ShoppingContent> {
       builder: ((context, value, _) {
         final count = value.values.length;
 
-        if (count < 1) return _buildStab(context);
+        if (count < 1) return const Stub('No products');
         final lists = value.values.toList();
 
         return ListView.builder(
           itemCount: count,
-          itemBuilder: (context, index) =>
-              _buildProductItem(context, lists[index]),
+          itemBuilder: (context, index) => ListItem(
+            name: lists[index].name,
+            onTap: () {},
+          ),
         );
       }),
-    );
-  }
-
-  Widget _buildStab(BuildContext context) {
-    return const Center(
-      child: Text('No products'),
-    );
-  }
-
-  Widget _buildProductItem(BuildContext context, Item item) {
-    return InkWell(
-      onTap: () {
-        // выделять цветом купленные продукты
-        // сохранять состояние до следующей покупки
-        // добавить сброс состояния
-      },
-      borderRadius: BorderRadius.circular(15),
-      splashColor: Colors.lightBlue,
-      child: Card.outlined(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(item.name),
-        ),
-      ),
     );
   }
 }
