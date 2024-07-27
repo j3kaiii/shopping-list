@@ -103,6 +103,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
       valueListenable: _productsBox.listenable(),
       builder: ((context, value, _) {
         final items = value.values.toList();
+        items.sort((a, b) => b.isActive ? 1 : -1);
 
         return items.isEmpty
             ? const Stub('No products')
