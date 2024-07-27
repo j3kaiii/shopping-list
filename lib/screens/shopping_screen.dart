@@ -21,7 +21,9 @@ class ShoppingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return CommonContentScreen(
+      title: shoppingId,
+      child: FutureBuilder(
         future: Hive.openBox<Item>(shoppingId),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
@@ -32,7 +34,9 @@ class ShoppingScreen extends StatelessWidget {
           } else {
             return const CircularProgressIndicator();
           }
-        }));
+        }),
+      ),
+    );
   }
 }
 
@@ -47,27 +51,32 @@ class ShoppingContent extends StatefulWidget {
 }
 
 class _ShoppingContentState extends State<ShoppingContent> {
+  late final Box<Item> _productsBox;
+
+  @override
+  void initState() {
+    super.initState();
+    _productsBox = widget.box;
+  }
+
   @override
   void dispose() {
-    widget.box.close();
+    _productsBox.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CommonContentScreen(
-      title: widget.listName,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: double.maxFinite,
-          width: double.maxFinite,
-          child: Stack(
-            children: [
-              _buildList(context),
-              _buildAddProduct(context),
-            ],
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: double.maxFinite,
+        width: double.maxFinite,
+        child: Stack(
+          children: [
+            _buildList(context),
+            _buildAddProduct(context),
+          ],
         ),
       ),
     );
@@ -81,7 +90,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
         onPressed: () => context.goNamed(
           products,
           pathParameters: {shoppingParams: widget.listName},
-          extra: widget.box,
+          extra: _productsBox,
         ),
         icon: const Icon(Icons.add),
         label: const Text('add products'),
@@ -91,21 +100,29 @@ class _ShoppingContentState extends State<ShoppingContent> {
 
   Widget _buildList(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: widget.box.listenable(),
+      valueListenable: _productsBox.listenable(),
       builder: ((context, value, _) {
-        final count = value.values.length;
+        final items = value.values.toList();
 
-        if (count < 1) return const Stub('No products');
-        final lists = value.values.toList();
-
-        return ListView.builder(
-          itemCount: count,
-          itemBuilder: (context, index) => ListItem(
-            name: lists[index].name,
-            onTap: () {},
-          ),
-        );
+        return items.isEmpty
+            ? const Stub('No products')
+            : ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return ListItem(
+                    name: item.name,
+                    color: item.isActive ? Colors.lightBlue : null,
+                    onTap: () => _onItemTap(item),
+                  );
+                },
+              );
       }),
     );
+  }
+
+  void _onItemTap(Item item) {
+    _productsBox.put(
+        item.name, Item(name: item.name, isActive: !item.isActive));
   }
 }

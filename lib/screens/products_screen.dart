@@ -67,6 +67,7 @@ class _ProductsContentState extends State<ProductsContent> {
   @override
   void dispose() {
     _textController.dispose();
+    _productsBox.close();
     super.dispose();
   }
 

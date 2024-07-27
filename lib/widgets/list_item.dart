@@ -14,10 +14,10 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card.outlined(
-      color: color,
-      child: GestureDetector(
-        onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card.outlined(
+        color: color,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text(name),
