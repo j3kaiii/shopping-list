@@ -3,12 +3,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/utils/item_box_extension.dart';
 import 'package:shopping_list_example/widgets/bottom_panel.dart';
 import 'package:shopping_list_example/widgets/stub.dart';
 
 /// Экран выбора продуктов.
 ///
-/// Содержит список всех продуктов и по тапу добавляет продукт в список покупок.
+/// Содержит список всех продуктов
+/// и по тапу добавляет продукт в список покупок.
 
 class ProductsScreen extends StatelessWidget {
   final Box<Item> shoppingBox;
@@ -19,12 +21,12 @@ class ProductsScreen extends StatelessWidget {
     return CommonContentScreen(
       title: 'All products',
       child: FutureBuilder(
-          future: Hive.openBox<String>(productsBoxName),
+          future: Hive.openBox<Item>(productsBoxName),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ProductsContent(
                 shoppingBox: shoppingBox,
-                productsBox: snapshot.data as Box<String>,
+                productsBox: snapshot.data as Box<Item>,
               );
             } else {
               return const CircularProgressIndicator();
@@ -36,7 +38,7 @@ class ProductsScreen extends StatelessWidget {
 
 class ProductsContent extends StatefulWidget {
   final Box<Item> shoppingBox;
-  final Box<String> productsBox;
+  final Box<Item> productsBox;
   const ProductsContent({
     super.key,
     required this.shoppingBox,
@@ -49,7 +51,8 @@ class ProductsContent extends StatefulWidget {
 
 class _ProductsContentState extends State<ProductsContent> {
   late final TextEditingController _textController;
-  late final Box<String> _productsBox;
+  late final Box<Item> _productsBox;
+  late final Box<Item> _shoppingBox;
   bool _isAdding = false;
 
   @override
@@ -57,6 +60,8 @@ class _ProductsContentState extends State<ProductsContent> {
     super.initState();
     _textController = TextEditingController();
     _productsBox = widget.productsBox;
+    _shoppingBox = widget.shoppingBox;
+    _productsBox.resetToContains(_shoppingBox);
   }
 
   @override
@@ -96,7 +101,7 @@ class _ProductsContentState extends State<ProductsContent> {
   }
 
   String? _validate(String? value) =>
-      _productsBox.values.contains(value) ? 'Already exist' : null;
+      _productsBox.containsKey(value) ? 'Already exist' : null;
 
   void _onCancel() {
     setState(() {
@@ -108,7 +113,8 @@ class _ProductsContentState extends State<ProductsContent> {
 
   void _onAddPressed() {
     if (_isAdding) {
-      widget.productsBox.add(_textController.text);
+      final name = _textController.text;
+      _productsBox.put(name, Item(name: name, isActive: false));
       _textController.text = '';
       setState(() {
         _isAdding = false;
@@ -122,27 +128,48 @@ class _ProductsContentState extends State<ProductsContent> {
 
   Widget _buildProuductsList(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: widget.productsBox.listenable(),
-      builder: (context, value, _) => value.isEmpty
-          ? const Stub('no products')
-          : ListView.builder(
-              itemCount: value.length,
-              itemBuilder: (context, index) {
-                return _buildProductItem(context, value.values.toList()[index]);
-              },
-            ),
+      valueListenable: _productsBox.listenable(),
+      builder: (context, value, _) {
+        final products = value.values.toList();
+        return products.isEmpty
+            ? const Stub('no products')
+            : ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final item = products[index];
+                  return _buildProductItem(
+                    context,
+                    item,
+                  );
+                },
+              );
+      },
     );
   }
 
-  Widget _buildProductItem(BuildContext context, String productName) {
-    return InkWell(
-      onTap: () => widget.shoppingBox.add(Item(name: productName)),
-      child: Card.outlined(
+  Widget _buildProductItem(
+    BuildContext context,
+    Item item,
+  ) {
+    return Card.outlined(
+      color: item.isActive ? Colors.green : null,
+      child: InkWell(
+        onTap: () => _onItemTap(item),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Text(productName),
+          child: Text(item.name),
         ),
       ),
     );
+  }
+
+  void _onItemTap(Item item) {
+    if (item.isActive) {
+      _productsBox.put(item.name, Item(name: item.name, isActive: false));
+      _shoppingBox.delete(item.name);
+    } else {
+      _shoppingBox.put(item.name, Item(name: item.name));
+      _productsBox.put(item.name, Item(name: item.name));
+    }
   }
 }

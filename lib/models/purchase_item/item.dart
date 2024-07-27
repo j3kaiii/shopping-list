@@ -10,4 +10,7 @@ class Item extends HiveObject {
   bool isActive;
 
   Item({required this.name, this.isActive = true});
+
+  @override
+  String toString() => 'Item $name, isActive: $isActive';
 }
