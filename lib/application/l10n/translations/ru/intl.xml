@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="applicationName">Рабочее название</string>
+<string name="welcomeScreenTitle">За покупками!</string>
+<string name="listsScreenTitle">Мои списки</string>
+<string name="productsScreenTitle">Мои продукты</string>
+<string name="emptyNameError">Введите название</string>
+<string name="existNameError">Такое название уже есть</string>
+<string name="existProductError">Такой продукт уже есть</string>
+<string name="noSavedListsTitle">Нет сохраненных списков покупок</string>
+<string name="noSavedProductsTitle">Нет сохраненных продуктов</string>
+<string name="emptyShoppingListTitle">Список покупок пуст</string>
+<string name="btnAdd">Добавить</string>
+<string name="btnCancel">Отменить</string>
+<string name="btnOk">OK</string>
+<string name="hintCreateName">Придумайте название</string>
+</resources>

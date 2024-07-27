@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
+import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/widgets/list_item.dart';
 import 'package:shopping_list_example/widgets/stub.dart';
 
@@ -67,6 +69,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -74,15 +77,15 @@ class _ShoppingContentState extends State<ShoppingContent> {
         width: double.maxFinite,
         child: Stack(
           children: [
-            _buildList(context),
-            _buildAddProduct(context),
+            _buildList(context, loc),
+            _buildAddProduct(context, loc),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAddProduct(BuildContext context) {
+  Widget _buildAddProduct(BuildContext context, AppLocalizations loc) {
     return PositionedDirectional(
       end: 20,
       bottom: 20,
@@ -93,12 +96,12 @@ class _ShoppingContentState extends State<ShoppingContent> {
           extra: _productsBox,
         ),
         icon: const Icon(Icons.add),
-        label: const Text('add products'),
+        label: Text(loc.btnAdd),
       ),
     );
   }
 
-  Widget _buildList(BuildContext context) {
+  Widget _buildList(BuildContext context, AppLocalizations loc) {
     return ValueListenableBuilder(
       valueListenable: _productsBox.listenable(),
       builder: ((context, value, _) {
@@ -106,7 +109,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
         items.sort((a, b) => b.isActive ? 1 : -1);
 
         return items.isEmpty
-            ? const Stub('No products')
+            ? Stub(loc.emptyShoppingListTitle)
             : ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, index) {

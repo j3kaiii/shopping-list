@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 
 class CancelButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -9,7 +10,7 @@ class CancelButton extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onPressed,
       icon: const Icon(Icons.cancel),
-      label: const Text('Cancel'),
+      label: Text(context.loc.btnCancel),
     );
   }
 }
@@ -25,10 +26,11 @@ class AddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     return ElevatedButton.icon(
       onPressed: onPressed,
       icon: Icon(inProgress ? Icons.check : Icons.add),
-      label: Text(inProgress ? 'OK' : 'add'),
+      label: Text(inProgress ? loc.btnOk : loc.btnAdd),
     );
   }
 }

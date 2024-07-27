@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="applicationName">Placeholder</string>
+<string name="welcomeScreenTitle">Go Shopping!</string>
+<string name="listsScreenTitle">My Lists</string>
+<string name="productsScreenTitle">My Products</string>
+<string name="emptyNameError">Enter name</string>
+<string name="existNameError">Such name already exists</string>
+<string name="existProductError">Such product already exists</string>
+<string name="noSavedListsTitle">No saved shopping lists</string>
+<string name="noSavedProductsTitle">No saved products</string>
+<string name="emptyShoppingListTitle">Shopping list is empty</string>
+<string name="btnAdd">Add</string>
+<string name="btnCancel">Cancel</string>
+<string name="btnOk">OK</string>
+<string name="hintCreateName">Come up with a name</string>
+</resources>

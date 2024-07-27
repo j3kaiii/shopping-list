@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
+import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/widgets/bottom_panel.dart';
 import 'package:shopping_list_example/widgets/list_item.dart';
 import 'package:shopping_list_example/widgets/stub.dart';
@@ -37,13 +39,14 @@ class _ListsScreenState extends State<ListsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     return CommonContentScreen(
-      title: 'My lists',
+      title: loc.listsScreenTitle,
       child: LayoutBuilder(
         builder: (context, cts) {
           return Stack(
             children: [
-              _buildList(context),
+              _buildList(context, loc),
               if (_isCreating)
                 Container(
                   color:
@@ -58,7 +61,7 @@ class _ListsScreenState extends State<ListsScreen> {
                   onCancel: _onCancel,
                   panelWidth: cts.maxWidth - 46,
                   textController: _textController,
-                  validator: (value) => _validate(value),
+                  validator: (value) => _validate(value, loc),
                 ),
               ),
             ],
@@ -68,18 +71,18 @@ class _ListsScreenState extends State<ListsScreen> {
     );
   }
 
-  String? _validate(String? input) {
+  String? _validate(String? input, AppLocalizations loc) {
     if (input == null || input.isEmpty) {
-      return 'empty name';
+      return loc.emptyNameError;
     } else if (_listsBox.values.contains(input)) {
-      return 'name already exists';
+      return loc.existNameError;
     }
     return null;
   }
 
   void _onAddPressed() {
     if (_isCreating) {
-      _validator = _validate(_textController.text);
+      _validator = _validate(_textController.text, context.loc);
       if (_validator == null) {
         _listsBox.add(_textController.text);
         _textController.text = '';
@@ -102,13 +105,13 @@ class _ListsScreenState extends State<ListsScreen> {
     });
   }
 
-  Widget _buildList(BuildContext context) {
+  Widget _buildList(BuildContext context, AppLocalizations loc) {
     return ValueListenableBuilder(
       valueListenable: _listsBox.listenable(),
       builder: ((context, value, _) {
         final lists = value.values.toList();
 
-        if (lists.isEmpty) return const Stub('no lists');
+        if (lists.isEmpty) return Stub(loc.noSavedListsTitle);
 
         return ListView.builder(
           itemCount: lists.length,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_list_example/application/consts.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 
 /// Загрузочный экран.
 class LoadingScreen extends StatelessWidget {
@@ -32,11 +33,11 @@ class LoadingScreen extends StatelessWidget {
               style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Colors.lightBlue),
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Go shopping',
-                  style: TextStyle(fontSize: 26, color: Colors.white),
+                  context.loc.welcomeScreenTitle,
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
                 ),
               ),
             )

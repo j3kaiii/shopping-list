@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
+import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/utils/item_box_extension.dart';
 import 'package:shopping_list_example/widgets/bottom_panel.dart';
 import 'package:shopping_list_example/widgets/stub.dart';
@@ -19,7 +21,7 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonContentScreen(
-      title: 'All products',
+      title: context.loc.productsScreenTitle,
       child: FutureBuilder(
           future: Hive.openBox<Item>(productsBoxName),
           builder: (context, snapshot) {
@@ -73,11 +75,12 @@ class _ProductsContentState extends State<ProductsContent> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     return LayoutBuilder(
       builder: (context, cts) {
         return Stack(
           children: [
-            _buildProuductsList(context),
+            _buildProuductsList(context, loc),
             if (_isAdding)
               Container(
                 color:
@@ -92,7 +95,7 @@ class _ProductsContentState extends State<ProductsContent> {
                 onCancel: _onCancel,
                 panelWidth: cts.maxWidth - 46,
                 textController: _textController,
-                validator: (value) => _validate(value),
+                validator: (value) => _validate(value, loc),
               ),
             ),
           ],
@@ -101,8 +104,8 @@ class _ProductsContentState extends State<ProductsContent> {
     );
   }
 
-  String? _validate(String? value) =>
-      _productsBox.containsKey(value) ? 'Already exist' : null;
+  String? _validate(String? value, AppLocalizations loc) =>
+      _productsBox.containsKey(value) ? loc.existProductError : null;
 
   void _onCancel() {
     setState(() {
@@ -127,13 +130,13 @@ class _ProductsContentState extends State<ProductsContent> {
     }
   }
 
-  Widget _buildProuductsList(BuildContext context) {
+  Widget _buildProuductsList(BuildContext context, AppLocalizations loc) {
     return ValueListenableBuilder(
       valueListenable: _productsBox.listenable(),
       builder: (context, value, _) {
         final products = value.values.toList();
         return products.isEmpty
-            ? const Stub('no products')
+            ? Stub(loc.noSavedProductsTitle)
             : ListView.builder(
                 itemCount: products.length,
                 itemBuilder: (context, index) {

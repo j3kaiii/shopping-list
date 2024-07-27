@@ -1,0 +1,73 @@
+{
+  "@@last_modified": "2024-07-27T14:50:41.416521",
+  "applicationName": "Рабочее название",
+  "@applicationName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "welcomeScreenTitle": "За покупками!",
+  "@welcomeScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "listsScreenTitle": "Мои списки",
+  "@listsScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "productsScreenTitle": "Мои продукты",
+  "@productsScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyNameError": "Введите название",
+  "@emptyNameError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "existNameError": "Такое название уже есть",
+  "@existNameError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "existProductError": "Такой продукт уже есть",
+  "@existProductError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noSavedListsTitle": "Нет сохраненных списков покупок",
+  "@noSavedListsTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noSavedProductsTitle": "Нет сохраненных продуктов",
+  "@noSavedProductsTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyShoppingListTitle": "Список покупок пуст",
+  "@emptyShoppingListTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnAdd": "Добавить",
+  "@btnAdd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnCancel": "Отменить",
+  "@btnCancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnOk": "OK",
+  "@btnOk": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintCreateName": "Придумайте название",
+  "@hintCreateName": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/widgets/buttons.dart';
 
 typedef Validator = String? Function(String?);
@@ -44,7 +45,7 @@ class _BottomPanelState extends State<BottomPanel> {
                   validator: (value) => widget.validator!(value),
                   autovalidateMode: AutovalidateMode.always,
                   decoration: InputDecoration(
-                    hintText: 'Create name',
+                    hintText: context.loc.hintCreateName,
                     constraints: BoxConstraints(maxWidth: widget.panelWidth),
                   ),
                 ),

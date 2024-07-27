@@ -1,0 +1,73 @@
+{
+  "@@last_modified": "2024-07-27T14:54:43.959774",
+  "applicationName": "Placeholder",
+  "@applicationName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "welcomeScreenTitle": "Go Shopping!",
+  "@welcomeScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "listsScreenTitle": "My Lists",
+  "@listsScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "productsScreenTitle": "My Products",
+  "@productsScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyNameError": "Enter name",
+  "@emptyNameError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "existNameError": "Such name already exists",
+  "@existNameError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "existProductError": "Such product already exists",
+  "@existProductError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noSavedListsTitle": "No saved shopping lists",
+  "@noSavedListsTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noSavedProductsTitle": "No saved products",
+  "@noSavedProductsTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyShoppingListTitle": "Shopping list is empty",
+  "@emptyShoppingListTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnAdd": "Add",
+  "@btnAdd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnCancel": "Cancel",
+  "@btnCancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnOk": "OK",
+  "@btnOk": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintCreateName": "Come up with a name",
+  "@hintCreateName": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
