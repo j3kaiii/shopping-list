@@ -20,4 +20,14 @@ extension ResetBox on Box<Item> {
       }
     }
   }
+
+  void resetAllToUnpurchased() {
+    if (isEmpty) return;
+    final itemsList = values.toList();
+    itemsList.sort((a, b) => a.name.compareTo(b.name));
+    final activeMap = {
+      for (var e in itemsList) e.id: !e.isActive ? e.switchActive() : e
+    };
+    putAll(activeMap);
+  }
 }

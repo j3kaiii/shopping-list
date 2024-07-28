@@ -7,6 +7,7 @@ import 'package:shopping_list_example/models/purchase_item/item.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
+import 'package:shopping_list_example/utils/item_box_extension.dart';
 import 'package:shopping_list_example/widgets/list_item.dart';
 import 'package:shopping_list_example/widgets/stub.dart';
 
@@ -26,6 +27,7 @@ class ShoppingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonContentScreen(
       title: shopping.name,
+      actions: [_buildResetButton(context)],
       child: FutureBuilder(
         future: Hive.openBox<Item>(shopping.id),
         builder: ((context, snapshot) {
@@ -38,6 +40,21 @@ class ShoppingScreen extends StatelessWidget {
             return const CircularProgressIndicator();
           }
         }),
+      ),
+    );
+  }
+
+  Widget _buildResetButton(BuildContext context) {
+    return IconButton(
+      onPressed: () async {
+        final box = await Hive.openBox<Item>(shopping.id);
+        box.resetAllToUnpurchased();
+      },
+      icon: Transform.flip(
+        flipX: true,
+        child: const Icon(
+          Icons.refresh,
+        ),
       ),
     );
   }
