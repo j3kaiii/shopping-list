@@ -7,9 +7,7 @@ const root = '/';
 const loading = '/loading';
 
 const shoppingName = 'shopping';
-const shoppingParams = shoppingName;
-const shoppingPath = '$shoppingName/:$shoppingParams';
+const shoppingPath = shoppingName;
 
 const products = 'products';
-const productsExtras = 'shoppingBox';
 const productsPath = products;

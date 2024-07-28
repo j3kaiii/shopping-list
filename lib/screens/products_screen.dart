@@ -105,7 +105,9 @@ class _ProductsContentState extends State<ProductsContent> {
   }
 
   String? _validate(String? value, AppLocalizations loc) =>
-      _productsBox.containsKey(value) ? loc.existProductError : null;
+      _productsBox.values.any((item) => item.name == value)
+          ? loc.existProductError
+          : null;
 
   void _onCancel() {
     setState(() {
@@ -118,7 +120,8 @@ class _ProductsContentState extends State<ProductsContent> {
   void _onAddPressed() {
     if (_isAdding) {
       final name = _textController.text;
-      _productsBox.put(name, Item(name: name, isActive: false));
+      final item = Item.create(name);
+      _productsBox.put(item.id, item);
       _textController.text = '';
       setState(() {
         _isAdding = false;
@@ -168,12 +171,15 @@ class _ProductsContentState extends State<ProductsContent> {
   }
 
   void _onItemTap(Item item) {
+    final changed = item.switchActive();
     if (item.isActive) {
-      _productsBox.put(item.name, Item(name: item.name, isActive: false));
-      _shoppingBox.delete(item.name);
+      _productsBox.put(changed.id, changed);
+      _shoppingBox.delete(changed.id);
     } else {
-      _shoppingBox.put(item.name, Item(name: item.name));
-      _productsBox.put(item.name, Item(name: item.name));
+      final copy = Item.copy(changed);
+      _shoppingBox.put(copy.id, copy);
+
+      _productsBox.put(changed.id, changed);
     }
   }
 }

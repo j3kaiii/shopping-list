@@ -1,38 +1,34 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'item.dart';
+part of 'shopping_list.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ItemAdapter extends TypeAdapter<Item> {
+class ShoppingListAdapter extends TypeAdapter<ShoppingList> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  Item read(BinaryReader reader) {
+  ShoppingList read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Item(
-      id: fields[0] as String,
-      name: fields[1] as String,
-      isActive: fields[2] as bool,
+    return ShoppingList(
+      fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Item obj) {
+  void write(BinaryWriter writer, ShoppingList obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
-      ..writeByte(2)
-      ..write(obj.isActive);
+      ..write(obj.name);
   }
 
   @override
@@ -41,7 +37,7 @@ class ItemAdapter extends TypeAdapter<Item> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ItemAdapter &&
+      other is ShoppingListAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

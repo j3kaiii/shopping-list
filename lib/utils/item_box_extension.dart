@@ -6,11 +6,17 @@ extension ResetBox on Box<Item> {
     if (isEmpty) return;
     if (other.isEmpty) {
       for (var v in values) {
-        put(v.name, Item(name: v.name, isActive: false));
+        put(
+          v.id,
+          Item(id: v.id, name: v.name, isActive: false),
+        );
       }
     } else {
       for (var v in values) {
-        put(v.name, Item(name: v.name, isActive: other.containsKey(v.name)));
+        put(
+          v.id,
+          Item(id: v.id, name: v.name, isActive: other.containsKey(v.id)),
+        );
       }
     }
   }

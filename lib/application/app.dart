@@ -5,6 +5,7 @@ import 'package:shopping_list_example/application/app_routes.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
+import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 
 class ShoppingApp extends StatelessWidget {
   static final List<LocalizationsDelegate<dynamic>> _localizationsDelegates = [
@@ -33,6 +34,7 @@ class ShoppingApp extends StatelessWidget {
 void runWithHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ItemAdapter());
-  await Hive.openBox<String>(listsBoxName);
+  Hive.registerAdapter(ShoppingListAdapter());
+  await Hive.openBox<ShoppingList>(listsBoxName);
   runApp(const ShoppingApp());
 }

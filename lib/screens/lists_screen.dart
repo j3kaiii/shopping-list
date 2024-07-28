@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
+import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/widgets/bottom_panel.dart';
@@ -19,7 +20,7 @@ class ListsScreen extends StatefulWidget {
 
 class _ListsScreenState extends State<ListsScreen> {
   late final TextEditingController _textController;
-  late final Box<String> _listsBox;
+  late final Box<ShoppingList> _listsBox;
   bool _isCreating = false;
   String? _validator;
 
@@ -27,7 +28,7 @@ class _ListsScreenState extends State<ListsScreen> {
   void initState() {
     super.initState();
     _textController = TextEditingController();
-    _listsBox = Hive.box<String>(listsBoxName);
+    _listsBox = Hive.box<ShoppingList>(listsBoxName);
   }
 
   @override
@@ -74,7 +75,7 @@ class _ListsScreenState extends State<ListsScreen> {
   String? _validate(String? input, AppLocalizations loc) {
     if (input == null || input.isEmpty) {
       return loc.emptyNameError;
-    } else if (_listsBox.values.contains(input)) {
+    } else if (_listsBox.values.any((l) => l.name == input)) {
       return loc.existNameError;
     }
     return null;
@@ -84,7 +85,7 @@ class _ListsScreenState extends State<ListsScreen> {
     if (_isCreating) {
       _validator = _validate(_textController.text, context.loc);
       if (_validator == null) {
-        _listsBox.add(_textController.text);
+        _listsBox.add(ShoppingList(_textController.text));
         _textController.text = '';
         setState(() {
           _isCreating = !_isCreating;
@@ -116,10 +117,10 @@ class _ListsScreenState extends State<ListsScreen> {
         return ListView.builder(
           itemCount: lists.length,
           itemBuilder: (context, index) => ListItem(
-            name: lists[index],
+            name: lists[index].name,
             onTap: () => context.goNamed(
               shoppingName,
-              pathParameters: {shoppingParams: lists[index]},
+              extra: lists[index],
             ),
           ),
         );

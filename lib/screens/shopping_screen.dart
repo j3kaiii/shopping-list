@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
+import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/widgets/list_item.dart';
@@ -18,20 +19,20 @@ import 'package:shopping_list_example/widgets/stub.dart';
 /// (переход на экран выбора продуктов)
 
 class ShoppingScreen extends StatelessWidget {
-  final String shoppingId;
-  const ShoppingScreen({super.key, required this.shoppingId});
+  final ShoppingList shopping;
+  const ShoppingScreen({super.key, required this.shopping});
 
   @override
   Widget build(BuildContext context) {
     return CommonContentScreen(
-      title: shoppingId,
+      title: shopping.name,
       child: FutureBuilder(
-        future: Hive.openBox<Item>(shoppingId),
+        future: Hive.openBox<Item>(shopping.id),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             return ShoppingContent(
               box: snapshot.data as Box<Item>,
-              listName: shoppingId,
+              listId: shopping.id,
             );
           } else {
             return const CircularProgressIndicator();
@@ -43,10 +44,10 @@ class ShoppingScreen extends StatelessWidget {
 }
 
 class ShoppingContent extends StatefulWidget {
-  final String listName;
+  final String listId;
   final Box<Item> box;
 
-  const ShoppingContent({super.key, required this.box, required this.listName});
+  const ShoppingContent({super.key, required this.box, required this.listId});
 
   @override
   State<ShoppingContent> createState() => _ShoppingContentState();
@@ -90,9 +91,8 @@ class _ShoppingContentState extends State<ShoppingContent> {
       end: 20,
       bottom: 20,
       child: ElevatedButton.icon(
-        onPressed: () => context.goNamed(
+        onPressed: () => context.pushNamed(
           products,
-          pathParameters: {shoppingParams: widget.listName},
           extra: _productsBox,
         ),
         icon: const Icon(Icons.add),
@@ -126,7 +126,6 @@ class _ShoppingContentState extends State<ShoppingContent> {
   }
 
   void _onItemTap(Item item) {
-    _productsBox.put(
-        item.name, Item(name: item.name, isActive: !item.isActive));
+    _productsBox.put(item.id, item.switchActive());
   }
 }
