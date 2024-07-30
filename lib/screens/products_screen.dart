@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
+import 'package:shopping_list_example/application/theme.dart';
 import 'package:shopping_list_example/models/purchase_item/item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
@@ -13,7 +14,7 @@ import 'package:shopping_list_example/widgets/stub.dart';
 ///
 /// Содержит список всех продуктов
 /// и по тапу добавляет продукт в список покупок.
-
+/// Все продукты, содержащиеся в текущем спике покупок, отмечены цветом.
 class ProductsScreen extends StatelessWidget {
   final Box<Item> shoppingBox;
   const ProductsScreen({super.key, required this.shoppingBox});
@@ -76,16 +77,13 @@ class _ProductsContentState extends State<ProductsContent> {
   @override
   Widget build(BuildContext context) {
     final loc = context.loc;
+    final theme = context.theme;
     return LayoutBuilder(
       builder: (context, cts) {
         return Stack(
           children: [
-            _buildProuductsList(context, loc),
-            if (_isAdding)
-              Container(
-                color:
-                    const Color.fromARGB(255, 218, 243, 244).withOpacity(0.9),
-              ),
+            _buildProuductsList(context, loc, theme),
+            if (_isAdding) Container(color: theme.coloredBackground),
             PositionedDirectional(
               end: 8,
               bottom: 8,
@@ -133,7 +131,11 @@ class _ProductsContentState extends State<ProductsContent> {
     }
   }
 
-  Widget _buildProuductsList(BuildContext context, AppLocalizations loc) {
+  Widget _buildProuductsList(
+    BuildContext context,
+    AppLocalizations loc,
+    ShoppingThemeData theme,
+  ) {
     return ValueListenableBuilder(
       valueListenable: _productsBox.listenable(),
       builder: (context, value, _) {
@@ -147,6 +149,7 @@ class _ProductsContentState extends State<ProductsContent> {
                   return _buildProductItem(
                     context,
                     item,
+                    theme,
                   );
                 },
               );
@@ -157,9 +160,10 @@ class _ProductsContentState extends State<ProductsContent> {
   Widget _buildProductItem(
     BuildContext context,
     Item item,
+    ShoppingThemeData theme,
   ) {
     return Card.outlined(
-      color: item.isActive ? Colors.green : null,
+      color: item.isActive ? theme.activeItemColor : null,
       child: InkWell(
         onTap: () => _onItemTap(item),
         child: Padding(

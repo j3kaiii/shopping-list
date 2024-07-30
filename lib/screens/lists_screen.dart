@@ -41,6 +41,7 @@ class _ListsScreenState extends State<ListsScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = context.loc;
+    final theme = context.theme;
     return CommonContentScreen(
       title: loc.listsScreenTitle,
       child: LayoutBuilder(
@@ -48,11 +49,7 @@ class _ListsScreenState extends State<ListsScreen> {
           return Stack(
             children: [
               _buildList(context, loc),
-              if (_isCreating)
-                Container(
-                  color:
-                      const Color.fromARGB(255, 218, 243, 244).withOpacity(0.9),
-                ),
+              if (_isCreating) Container(color: theme.coloredBackground),
               PositionedDirectional(
                 end: 8,
                 bottom: 8,

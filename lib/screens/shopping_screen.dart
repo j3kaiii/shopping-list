@@ -14,11 +14,6 @@ import 'package:shopping_list_example/widgets/stub.dart';
 /// Экран списка продуктов.
 ///
 /// При тапе на продукт отмечает его как купленный.
-/// listUid - uid списка продуктов,
-/// если не указан, то это новый список,
-/// нужно показать заглушку и предложить добавить продукты
-/// (переход на экран выбора продуктов)
-
 class ShoppingScreen extends StatelessWidget {
   final ShoppingList shopping;
   const ShoppingScreen({super.key, required this.shopping});
@@ -119,6 +114,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
   }
 
   Widget _buildList(BuildContext context, AppLocalizations loc) {
+    final theme = context.theme;
     return ValueListenableBuilder(
       valueListenable: _productsBox.listenable(),
       builder: ((context, value, _) {
@@ -133,7 +129,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
                   final item = items[index];
                   return ListItem(
                     name: item.name,
-                    color: item.isActive ? Colors.lightBlue : null,
+                    color: item.isActive ? theme.activeItemColor : null,
                     onTap: () => _onItemTap(item),
                   );
                 },

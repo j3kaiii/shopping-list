@@ -10,7 +10,9 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const image = 'assets/images/image.png';
+    final theme = context.theme;
     return Material(
+      color: theme.primaryBgColor,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -20,7 +22,7 @@ class LoadingScreen extends StatelessWidget {
               height: 300,
               width: 300,
               decoration: BoxDecoration(
-                color: Colors.lightBlue,
+                color: theme.secondaryBgColor,
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Padding(
@@ -30,14 +32,15 @@ class LoadingScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () => context.goNamed(root),
-              style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.lightBlue),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll(theme.secondaryBgColor),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   context.loc.welcomeScreenTitle,
-                  style: const TextStyle(fontSize: 26, color: Colors.white),
+                  style: TextStyle(fontSize: 26, color: theme.primaryBgColor),
                 ),
               ),
             )

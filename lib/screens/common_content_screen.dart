@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 
 class CommonContentScreen extends StatelessWidget {
   final String title;
@@ -17,7 +18,7 @@ class CommonContentScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         centerTitle: true,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: context.theme.secondaryBgColor,
         actions: actions,
       ),
       body: child,
