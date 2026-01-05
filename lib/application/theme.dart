@@ -4,7 +4,7 @@ import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 class ShoppingTheme {
   static final _data = ShoppingThemeData(
     coloredBackground:
-        const Color.fromARGB(255, 218, 243, 244).withOpacity(0.9),
+        const Color.fromARGB(255, 218, 243, 244).withValues(alpha: .9),
     activeItemColor: Colors.green,
     primaryBgColor: Colors.white,
     secondaryBgColor: Colors.lightBlue,

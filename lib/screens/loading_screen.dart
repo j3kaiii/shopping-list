@@ -33,8 +33,7 @@ class LoadingScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => context.goNamed(root),
               style: ButtonStyle(
-                backgroundColor:
-                    MaterialStatePropertyAll(theme.secondaryBgColor),
+                backgroundColor: WidgetStatePropertyAll(theme.secondaryBgColor),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
