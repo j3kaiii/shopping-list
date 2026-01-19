@@ -4,5 +4,5 @@ import 'package:shopping_list_example/application/theme.dart';
 
 extension ContextExtension on BuildContext {
   AppLocalizations get loc => AppLocalizations.of(this);
-  ShoppingThemeData get theme => ShoppingThemeData.of(this);
+  ShoppingThemeData get theme => ShoppingTheme.of(this);
 }

@@ -28,10 +28,10 @@ class LoadingScreen extends StatelessWidget {
                 backgroundColor: WidgetStatePropertyAll(theme.secondaryBgColor),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Text(
                   context.loc.welcomeScreenTitle,
-                  style: TextStyle(fontSize: 26, color: theme.primaryBgColor),
+                  style: theme.titleTextStyle,
                 ),
               ),
             )

@@ -30,12 +30,19 @@ class ShoppingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomThemes(
       data: _themesData,
-      child: MaterialApp.router(
-        theme: ShoppingTheme.theme,
-        darkTheme: ShoppingTheme.theme,
-        routerConfig: appRoutes,
-        localizationsDelegates: _localizationsDelegates,
-        supportedLocales: _supportedLocales,
+      child: Builder(
+        builder: (themeContext) {
+          final shoppingTheme = ShoppingTheme.of(context);
+
+          return MaterialApp.router(
+            theme: shoppingTheme.theme(),
+            darkTheme: shoppingTheme.darkTheme(),
+            themeMode: ThemeMode.system,
+            routerConfig: appRoutes,
+            localizationsDelegates: _localizationsDelegates,
+            supportedLocales: _supportedLocales,
+          );
+        },
       ),
     );
   }

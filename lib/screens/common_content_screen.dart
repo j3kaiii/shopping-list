@@ -14,11 +14,12 @@ class CommonContentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title, style: theme.titleTextStyle),
         centerTitle: true,
-        backgroundColor: context.theme.secondaryBgColor,
+        backgroundColor: theme.secondaryBgColor,
         actions: actions,
       ),
       body: child,

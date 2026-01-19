@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 
 class Stub extends StatelessWidget {
   final String text;
@@ -7,7 +8,7 @@ class Stub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(text),
+      child: Text(text, style: context.theme.hintTextStyle),
     );
   }
 }
