@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/models/purchase_item/item.dart';
+import 'package:shopping_list_example/models/product/product.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/lists_screen.dart';
 import 'package:shopping_list_example/screens/loading_screen.dart';
@@ -32,7 +32,7 @@ final appRoutes = GoRouter(
               path: productsPath,
               name: products,
               builder: (context, state) => ProductsScreen(
-                shoppingBox: state.extra as Box<Item>,
+                shoppingBox: state.extra as Box<Product>,
               ),
             )
           ],

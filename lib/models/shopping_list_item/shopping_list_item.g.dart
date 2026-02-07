@@ -1,38 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'shopping_list.dart';
+part of 'shopping_list_item.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ShoppingListAdapter extends TypeAdapter<ShoppingList> {
+class ShoppingListItemAdapter extends TypeAdapter<ShoppingListItem> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  ShoppingList read(BinaryReader reader) {
+  ShoppingListItem read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ShoppingList(
-      id: fields[0] as String,
-      name: fields[1] as String,
-      items: (fields[2] as List).cast<ShoppingListItem>(),
+    return ShoppingListItem(
+      productId: fields[0] as String,
+      isPurchased: fields[1] as bool,
+      quantity: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ShoppingList obj) {
+  void write(BinaryWriter writer, ShoppingListItem obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.productId)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.isPurchased)
       ..writeByte(2)
-      ..write(obj.items);
+      ..write(obj.quantity);
   }
 
   @override
@@ -41,7 +41,7 @@ class ShoppingListAdapter extends TypeAdapter<ShoppingList> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ShoppingListAdapter &&
+      other is ShoppingListItemAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
