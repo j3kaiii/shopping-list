@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/application/theme.dart';
-import 'package:shopping_list_example/models/purchase_item/item.dart';
+import 'package:shopping_list_example/models/product/product.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/utils/item_box_extension.dart';
@@ -16,20 +16,18 @@ import 'package:shopping_list_example/widgets/stub.dart';
 /// и по тапу добавляет продукт в список покупок.
 /// Все продукты, содержащиеся в текущем спике покупок, отмечены цветом.
 class ProductsScreen extends StatelessWidget {
-  final Box<Item> shoppingBox;
-  const ProductsScreen({super.key, required this.shoppingBox});
+  const ProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CommonContentScreen(
       title: context.loc.productsScreenTitle,
       child: FutureBuilder(
-          future: Hive.openBox<Item>(productsBoxName),
+          future: Hive.openBox<Product>(productsBoxName),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ProductsContent(
-                shoppingBox: shoppingBox,
-                productsBox: snapshot.data as Box<Item>,
+                productsBox: snapshot.data as Box<Product>,
               );
             } else {
               return const CircularProgressIndicator();
@@ -40,11 +38,9 @@ class ProductsScreen extends StatelessWidget {
 }
 
 class ProductsContent extends StatefulWidget {
-  final Box<Item> shoppingBox;
-  final Box<Item> productsBox;
+  final Box<Product> productsBox;
   const ProductsContent({
     super.key,
-    required this.shoppingBox,
     required this.productsBox,
   });
 
@@ -54,8 +50,7 @@ class ProductsContent extends StatefulWidget {
 
 class _ProductsContentState extends State<ProductsContent> {
   late final TextEditingController _textController;
-  late final Box<Item> _productsBox;
-  late final Box<Item> _shoppingBox;
+  late final Box<Product> _productsBox;
   bool _isAdding = false;
 
   @override
@@ -63,8 +58,7 @@ class _ProductsContentState extends State<ProductsContent> {
     super.initState();
     _textController = TextEditingController();
     _productsBox = widget.productsBox;
-    _shoppingBox = widget.shoppingBox;
-    _productsBox.resetToContains(_shoppingBox);
+    // _productsBox.resetToContains(_shoppingBox);
   }
 
   @override
@@ -118,7 +112,7 @@ class _ProductsContentState extends State<ProductsContent> {
   void _onAddPressed() {
     if (_isAdding) {
       final name = _textController.text;
-      final item = Item.create(name);
+      final item = Product.create(name);
       _productsBox.put(item.id, item);
       _textController.text = '';
       setState(() {
@@ -159,31 +153,32 @@ class _ProductsContentState extends State<ProductsContent> {
 
   Widget _buildProductItem(
     BuildContext context,
-    Item item,
+    Product item,
     ShoppingThemeData theme,
   ) {
     return Card.outlined(
-      color: item.isActive ? theme.activeItemColor : null,
-      child: InkWell(
-        onTap: () => _onItemTap(item),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(item.name),
-        ),
-      ),
+      color: theme.activeItemColor,
+      child: const Placeholder(),
+      // InkWell(
+      //   onTap: () => _onItemTap(item),
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(12.0),
+      //     child: Text(item.name),
+      //   ),
+      // ),
     );
   }
 
-  void _onItemTap(Item item) {
-    final changed = item.switchActive();
-    if (item.isActive) {
-      _productsBox.put(changed.id, changed);
-      _shoppingBox.delete(changed.id);
-    } else {
-      final copy = Item.copy(changed);
-      _shoppingBox.put(copy.id, copy);
+  // void _onItemTap(Product item) {
+  //   final changed = item.switchActive();
+  //   if (item.isActive) {
+  //     _productsBox.put(changed.id, changed);
+  //     _shoppingBox.delete(changed.id);
+  //   } else {
+  //     final copy = Product.copy(changed);
+  //     _shoppingBox.put(copy.id, copy);
 
-      _productsBox.put(changed.id, changed);
-    }
-  }
+  //     _productsBox.put(changed.id, changed);
+  //   }
+  // }
 }

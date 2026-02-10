@@ -1,7 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/models/product/product.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/lists_screen.dart';
 import 'package:shopping_list_example/screens/loading_screen.dart';
@@ -27,16 +25,12 @@ final appRoutes = GoRouter(
           builder: (context, state) => ShoppingScreen(
             shopping: state.extra as ShoppingList,
           ),
-          routes: [
-            GoRoute(
-              path: productsPath,
-              name: products,
-              builder: (context, state) => ProductsScreen(
-                shoppingBox: state.extra as Box<Product>,
-              ),
-            )
-          ],
-        )
+        ),
+        GoRoute(
+          path: productsPath,
+          name: products,
+          builder: (context, state) => const ProductsScreen(),
+        ),
       ],
     ),
   ],

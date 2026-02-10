@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
-import 'package:shopping_list_example/widgets/bottom_panel.dart';
 import 'package:shopping_list_example/widgets/list_item.dart';
-import 'package:shopping_list_example/widgets/stub.dart';
+import 'package:shopping_list_example/widgets/shopping_list_tile.dart';
 
 /// Экран списков продуктов.
 class ListsScreen extends StatefulWidget {
@@ -41,32 +39,61 @@ class _ListsScreenState extends State<ListsScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = context.loc;
-    final theme = context.theme;
     return CommonContentScreen(
       title: loc.listsScreenTitle,
-      child: LayoutBuilder(
-        builder: (context, cts) {
-          return Stack(
-            children: [
-              _buildList(context, loc),
-              if (_isCreating) Container(color: theme.coloredBackground),
-              PositionedDirectional(
-                end: 8,
-                bottom: 8,
-                child: BottomPanel(
-                  isAdding: _isCreating,
-                  onAddPressed: _onAddPressed,
-                  onCancel: _onCancel,
-                  panelWidth: cts.maxWidth - 46,
-                  textController: _textController,
-                  validator: (value) => _validate(value, loc),
-                ),
-              ),
-            ],
-          );
-        },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ColoredBox(
+            color: context.theme.primaryBgColor,
+            child: _buildList(context, loc)),
       ),
     );
+  }
+
+  void _onCreatePressed() async {
+    final res = await showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text('Create new list'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: TextFormField(
+                      controller: _textController,
+                      autofocus: true,
+                      validator: (v) => _validate(v, context.loc),
+                      autovalidateMode: AutovalidateMode.always,
+                      decoration: InputDecoration(
+                        hintText: context.loc.hintCreateName,
+                        // constraints: BoxConstraints(maxWidth: widget.panelWidth),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: Text('Cencel'),
+                      ),
+                      TextButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: Text('OK')),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   String? _validate(String? input, AppLocalizations loc) {
@@ -78,48 +105,32 @@ class _ListsScreenState extends State<ListsScreen> {
     return null;
   }
 
-  void _onAddPressed() {
-    if (_isCreating) {
-      _validator = _validate(_textController.text, context.loc);
-      if (_validator == null) {
-        _listsBox.add(ShoppingList(_textController.text));
-        _textController.text = '';
-        setState(() {
-          _isCreating = !_isCreating;
-        });
-      }
-    } else {
-      setState(() {
-        _isCreating = !_isCreating;
-      });
-    }
-  }
-
-  void _onCancel() {
-    setState(() {
-      _textController.text = '';
-      _validator = null;
-      _isCreating = !_isCreating;
-    });
-  }
-
   Widget _buildList(BuildContext context, AppLocalizations loc) {
+    final shoppingLists = List.generate(
+        10,
+        (index) =>
+            ShoppingList(id: index.toString(), name: 'List #${index + 1}'));
     return ValueListenableBuilder(
       valueListenable: _listsBox.listenable(),
       builder: ((context, value, _) {
-        final lists = value.values.toList();
-
-        if (lists.isEmpty) return Stub(loc.noSavedListsTitle);
+        final lists = shoppingLists; // value.values.toList();
+        final count = lists.length;
 
         return ListView.builder(
-          itemCount: lists.length,
-          itemBuilder: (context, index) => ListItem(
-            name: lists[index].name,
-            onTap: () => context.goNamed(
-              shoppingName,
-              extra: lists[index],
-            ),
-          ),
+          itemCount: count + 1,
+          itemBuilder: (context, index) {
+            if (lists.isEmpty) {
+              return ListItem(
+                name: 'Create new',
+                isButton: true,
+                onTap: _onCreatePressed,
+              );
+            } else if (index < count) {
+              return ShoppingListTile(lists[index]);
+            } else {
+              return ListItem(name: 'Create new', onTap: () {});
+            }
+          },
         );
       }),
     );

@@ -8,7 +8,7 @@ class ShoppingTheme {
     coloredBackground:
         const Color.fromARGB(255, 6, 67, 88).withValues(alpha: .9),
     primaryBgColor: _Colors.greyLight,
-    secondaryBgColor: const Color.fromARGB(255, 20, 157, 225),
+    secondaryBgColor: _Colors.blue,
     textColor: Colors.white,
   );
 
@@ -20,7 +20,6 @@ class ShoppingTheme {
         darkDefault: ShoppingTheme._dataDark,
       );
 
-  // Удаляем статические theme и darkTheme, так как они должны браться из контекста
   ShoppingTheme._();
 }
 
@@ -29,24 +28,32 @@ class ShoppingThemeData extends CustomThemeData {
     Color? coloredBackground,
     Color activeItemColor = Colors.green,
     Color primaryBgColor = _Colors.greyLight,
-    Color secondaryBgColor = _Colors.greenDark,
+    Color secondaryBgColor = _Colors.blue,
     Color textColor = _Colors.greyDark,
     TextStyle? titleTextStyle,
+    TextStyle? buttonTextStyle,
     TextStyle? defaultTextStyle,
     TextStyle? hintTextStyle,
+    ButtonStyle? buttonStyle,
   }) {
     coloredBackground ??=
         const Color.fromARGB(255, 218, 243, 244).withValues(alpha: .9);
 
     titleTextStyle ??= const TextStyle(
-      color: _Colors.white,
+      color: _Colors.black,
       fontSize: 24,
       fontWeight: FontWeight.w600,
     );
 
-    defaultTextStyle ??= TextStyle(
-      color: textColor,
-      fontSize: 16,
+    buttonTextStyle ??= const TextStyle(
+      color: _Colors.black,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    );
+
+    defaultTextStyle ??= const TextStyle(
+      color: _Colors.black,
+      fontSize: 18,
       fontWeight: FontWeight.normal,
     );
 
@@ -56,6 +63,19 @@ class ShoppingThemeData extends CustomThemeData {
       fontWeight: FontWeight.normal,
     );
 
+    buttonStyle ??= ButtonStyle(
+        textStyle: const WidgetStatePropertyAll(TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        )),
+        backgroundColor: WidgetStatePropertyAll(secondaryBgColor),
+        foregroundColor: const WidgetStatePropertyAll(_Colors.white),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ));
+
     return ShoppingThemeData._raw(
       coloredBackground: coloredBackground,
       activeItemColor: activeItemColor,
@@ -63,8 +83,10 @@ class ShoppingThemeData extends CustomThemeData {
       secondaryBgColor: secondaryBgColor,
       textColor: textColor,
       titleTextStyle: titleTextStyle,
+      buttonTextStyle: buttonTextStyle,
       defaultTextStyle: defaultTextStyle,
       hintTextStyle: hintTextStyle,
+      buttonStyle: buttonStyle,
     );
   }
 
@@ -75,8 +97,10 @@ class ShoppingThemeData extends CustomThemeData {
     required this.secondaryBgColor,
     required this.textColor,
     required this.titleTextStyle,
+    required this.buttonTextStyle,
     required this.defaultTextStyle,
     required this.hintTextStyle,
+    required this.buttonStyle,
   });
 
   // Цвет фона шторки
@@ -84,14 +108,17 @@ class ShoppingThemeData extends CustomThemeData {
   // Цвет активного элемента
   final Color? activeItemColor;
   // Основной цвет фона
-  final Color? primaryBgColor;
+  final Color primaryBgColor;
   // Дополнительный цвет фона
   final Color? secondaryBgColor;
   final Color? textColor;
 
   final TextStyle? titleTextStyle;
+  final TextStyle? buttonTextStyle;
   final TextStyle? defaultTextStyle;
   final TextStyle? hintTextStyle;
+
+  final ButtonStyle? buttonStyle;
 }
 
 extension ShoppingThemeDataExtension on ShoppingThemeData {
@@ -107,10 +134,11 @@ extension ShoppingThemeDataExtension on ShoppingThemeData {
 }
 
 class _Colors {
-  static const greenDark = Color.fromARGB(255, 0, 129, 0);
+  static const greenDark = Color(0xFF4F967A);
   static const greenLight = Color.fromARGB(255, 0, 217, 0);
-  static const greyLight = Color.fromARGB(255, 208, 208, 208);
+  static const greyLight = Color(0xFFF4F4F4);
   static const greyDark = Color.fromARGB(255, 112, 111, 111);
   static const white = Color.fromARGB(255, 245, 245, 245);
-  static const black = Color.fromARGB(255, 50, 50, 50);
+  static const black = Color(0xFF090909);
+  static const blue = Color(0xFF257BF4);
 }
