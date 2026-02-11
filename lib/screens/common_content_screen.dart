@@ -7,11 +7,13 @@ class CommonContentScreen extends StatelessWidget {
   final String title;
   final List<Widget>? actions;
   final Widget child;
+  final VoidCallback? onFABPressed;
   const CommonContentScreen({
     super.key,
     required this.title,
     required this.child,
     this.actions,
+    this.onFABPressed,
   });
 
   @override
@@ -25,6 +27,10 @@ class CommonContentScreen extends StatelessWidget {
       ),
       drawer: _buildMenu(context),
       body: child,
+      floatingActionButton: onFABPressed != null
+          ? FloatingActionButton(onPressed: onFABPressed)
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 

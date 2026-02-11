@@ -11,3 +11,6 @@ const shoppingPath = shoppingName;
 
 const products = 'products';
 const productsPath = products;
+
+const createName = 'create';
+const createPath = createName;

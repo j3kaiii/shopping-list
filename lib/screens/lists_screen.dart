@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/screens/create_item_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/widgets/list_item.dart';
 import 'package:shopping_list_example/widgets/shopping_list_tile.dart';
@@ -41,6 +43,8 @@ class _ListsScreenState extends State<ListsScreen> {
     final loc = context.loc;
     return CommonContentScreen(
       title: loc.listsScreenTitle,
+      onFABPressed: () => context.goNamed(createName,
+          extra: const CreateItemScreenArgs(ItemType.list)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: ColoredBox(
@@ -82,11 +86,11 @@ class _ListsScreenState extends State<ListsScreen> {
                         onPressed: () {
                           Navigator.of(context).pop(false);
                         },
-                        child: Text('Cencel'),
+                        child: const Text('Cencel'),
                       ),
                       TextButton(
                           onPressed: () => Navigator.of(context).pop(true),
-                          child: Text('OK')),
+                          child: const Text('OK')),
                     ],
                   )
                 ],
