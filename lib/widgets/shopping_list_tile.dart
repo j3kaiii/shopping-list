@@ -36,16 +36,19 @@ class ShoppingListTile extends StatelessWidget {
   }
 
   Widget _buildProgress(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 12.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Column(
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text('12/20 items collected'), Text('60%')],
           ),
           LinearProgressIndicator(
+            color: context.theme.secondaryBgColor,
             value: 0.6,
+            minHeight: 8.0,
+            borderRadius: BorderRadius.circular(4.0),
           ),
         ],
       ),
@@ -54,7 +57,7 @@ class ShoppingListTile extends StatelessWidget {
 
   Widget _buildButton(BuildContext context) {
     return ElevatedButton(
-      style: context.theme.buttonStyle,
+      style: context.theme.titledButtonStyle,
       onPressed: () {},
       child: const Text('Continue shopping'),
     );
