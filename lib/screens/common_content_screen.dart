@@ -28,7 +28,12 @@ class CommonContentScreen extends StatelessWidget {
       drawer: _buildMenu(context),
       body: child,
       floatingActionButton: onFABPressed != null
-          ? FloatingActionButton(onPressed: onFABPressed)
+          ? IconButton.filled(
+              iconSize: 40.0,
+              onPressed: onFABPressed,
+              icon: const Icon(Icons.add),
+              style: context.theme.iconButtonStyle,
+            )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

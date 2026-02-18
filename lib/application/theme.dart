@@ -34,7 +34,8 @@ class ShoppingThemeData extends CustomThemeData {
     TextStyle? buttonTextStyle,
     TextStyle? defaultTextStyle,
     TextStyle? hintTextStyle,
-    ButtonStyle? buttonStyle,
+    ButtonStyle? titledButtonStyle,
+    ButtonStyle? iconButtonStyle,
   }) {
     coloredBackground ??=
         const Color.fromARGB(255, 218, 243, 244).withValues(alpha: .9);
@@ -63,7 +64,7 @@ class ShoppingThemeData extends CustomThemeData {
       fontWeight: FontWeight.normal,
     );
 
-    buttonStyle ??= ButtonStyle(
+    titledButtonStyle ??= ButtonStyle(
         textStyle: const WidgetStatePropertyAll(TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -76,6 +77,12 @@ class ShoppingThemeData extends CustomThemeData {
           ),
         ));
 
+    iconButtonStyle ??= IconButton.styleFrom(
+      backgroundColor: secondaryBgColor,
+      shadowColor: _Colors.black,
+      elevation: 2.0,
+    );
+
     return ShoppingThemeData._raw(
       coloredBackground: coloredBackground,
       activeItemColor: activeItemColor,
@@ -86,7 +93,8 @@ class ShoppingThemeData extends CustomThemeData {
       buttonTextStyle: buttonTextStyle,
       defaultTextStyle: defaultTextStyle,
       hintTextStyle: hintTextStyle,
-      buttonStyle: buttonStyle,
+      titledButtonStyle: titledButtonStyle,
+      iconButtonStyle: iconButtonStyle,
     );
   }
 
@@ -100,7 +108,8 @@ class ShoppingThemeData extends CustomThemeData {
     required this.buttonTextStyle,
     required this.defaultTextStyle,
     required this.hintTextStyle,
-    required this.buttonStyle,
+    required this.titledButtonStyle,
+    required this.iconButtonStyle,
   });
 
   // Цвет фона шторки
@@ -118,7 +127,8 @@ class ShoppingThemeData extends CustomThemeData {
   final TextStyle? defaultTextStyle;
   final TextStyle? hintTextStyle;
 
-  final ButtonStyle? buttonStyle;
+  final ButtonStyle? titledButtonStyle;
+  final ButtonStyle? iconButtonStyle;
 }
 
 extension ShoppingThemeDataExtension on ShoppingThemeData {
