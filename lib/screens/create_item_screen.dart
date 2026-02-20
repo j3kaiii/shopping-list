@@ -17,14 +17,77 @@ class CreateItemScreen extends StatefulWidget {
 }
 
 class _CreateItemScreenState extends State<CreateItemScreen> {
-  // TODO: при создании продукта он добавляется в общую базу
-  // и сразу привязывается к списку ownerList.
-  // При создании списка
-  // проиграть анимашку с галочкой,
-  // затем кнопка "Сохранить" меняется на "Добавить продукты"
+  final _itemNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _itemNameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const CommonContentScreen(title: 'Add new', child: Placeholder());
+    return CommonContentScreen(
+      title: 'Add New Item',
+      showBackButton: true,
+      bottomButtonText: 'Add to Database',
+      onBottomButtonPressed: () {
+        // TODO
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 24),
+            const Text(
+              'What do you need today?',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Add an item to your digital pantry.',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 40),
+            const Text(
+              'ITEM NAME',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF3B3BFF),
+                letterSpacing: 0.5,
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Text field
+            TextField(
+              controller: _itemNameController,
+              decoration: InputDecoration(
+                hintText: 'e.g. Oat Milk',
+                hintStyle: TextStyle(
+                  color: Colors.grey[400],
+                  fontSize: 16,
+                ),
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF3B3BFF)),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF3B3BFF), width: 2),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

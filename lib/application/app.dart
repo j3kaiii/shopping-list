@@ -33,7 +33,7 @@ class ShoppingApp extends StatelessWidget {
       data: _themesData,
       child: Builder(
         builder: (themeContext) {
-          final shoppingTheme = ShoppingTheme.of(context);
+          final shoppingTheme = ShoppingTheme.of(themeContext);
 
           return MaterialApp.router(
             theme: shoppingTheme.theme(),

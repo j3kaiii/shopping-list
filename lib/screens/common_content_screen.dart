@@ -8,12 +8,18 @@ class CommonContentScreen extends StatelessWidget {
   final List<Widget>? actions;
   final Widget child;
   final VoidCallback? onFABPressed;
+  final bool showBackButton;
+  final String? bottomButtonText;
+  final VoidCallback? onBottomButtonPressed;
   const CommonContentScreen({
     super.key,
     required this.title,
     required this.child,
     this.actions,
     this.onFABPressed,
+    this.showBackButton = false,
+    this.bottomButtonText,
+    this.onBottomButtonPressed,
   });
 
   @override
@@ -24,9 +30,18 @@ class CommonContentScreen extends StatelessWidget {
         title: Text(title, style: theme.titleTextStyle),
         centerTitle: true,
         actions: actions,
+        leading: showBackButton
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            : null,
       ),
-      drawer: _buildMenu(context),
+      drawer: showBackButton ? null : _buildMenu(context),
       body: child,
+      bottomNavigationBar: bottomButtonText != null && onBottomButtonPressed != null
+          ? _buildBottomButton(context)
+          : null,
       floatingActionButton: onFABPressed != null
           ? IconButton.filled(
               iconSize: 40.0,
@@ -36,6 +51,53 @@ class CommonContentScreen extends StatelessWidget {
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  Widget _buildBottomButton(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: ElevatedButton(
+            onPressed: onBottomButtonPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF3B3BFF),
+              foregroundColor: Colors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  bottomButtonText!,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Icon(Icons.add_circle_outline),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
