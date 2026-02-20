@@ -47,9 +47,7 @@ class _ListsScreenState extends State<ListsScreen> {
           extra: const CreateItemScreenArgs(ItemType.list)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: ColoredBox(
-            color: context.theme.primaryBgColor,
-            child: _buildList(context, loc)),
+        child: _buildList(context, loc),
       ),
     );
   }
@@ -120,23 +118,26 @@ class _ListsScreenState extends State<ListsScreen> {
         final lists = shoppingLists; // value.values.toList();
         final count = lists.length;
 
-        return ListView.builder(
-          itemCount: count + 1,
-          itemBuilder: (context, index) {
-            if (lists.isEmpty) {
-              return ListItem(
-                name: 'Create new',
-                isButton: true,
-                onTap: _onCreatePressed,
+        return lists.isEmpty
+            ? _buildEmptyStab(context)
+            : ListView.builder(
+                itemCount: count,
+                itemBuilder: (context, index) => ShoppingListTile(lists[index]),
               );
-            } else if (index < count) {
-              return ShoppingListTile(lists[index]);
-            } else {
-              return ListItem(name: 'Create new', onTap: () {});
-            }
-          },
-        );
       }),
+    );
+  }
+
+  Widget _buildEmptyStab(BuildContext context) {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FittedBox(fit: BoxFit.contain, child: Icon(Icons.no_food)),
+          SizedBox(height: 50),
+          Text('Списков пока нет'),
+        ],
+      ),
     );
   }
 }
