@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
+import 'package:shopping_list_example/models/product/product.dart';
+import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/utils/context_extension.dart';
 
 class CreateItemScreenArgs {
   final ItemType type;
@@ -19,24 +25,30 @@ class CreateItemScreen extends StatefulWidget {
 
 class _CreateItemScreenState extends State<CreateItemScreen> {
   final _itemNameController = TextEditingController();
+  bool _validateNameExist = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _itemNameController.addListener(_resetValidation);
+  }
 
   @override
   void dispose() {
+    _itemNameController.removeListener(_resetValidation);
     _itemNameController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context);
+    final loc = context.loc;
     final type = widget.args.type;
     return CommonContentScreen(
       title: loc.createItemTitle(type),
       showBackButton: true,
       bottomButtonText: loc.createItemBottomButton(type),
-      onBottomButtonPressed: () {
-        // TODO
-      },
+      onBottomButtonPressed: () => _addItem(context, type),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -84,6 +96,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
                 focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFF3B3BFF), width: 2),
                 ),
+                errorText: _errorMsg(loc, type),
               ),
             ),
           ],
@@ -91,6 +104,66 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
       ),
     );
   }
+
+  Future<void> _addItem(BuildContext context, ItemType type) async {
+    final name = _itemNameController.text.trim();
+    if (name.isEmpty) return;
+
+    if (type == ItemType.list) {
+      await _addList(context, name);
+    } else if (type == ItemType.product) {
+      await _addProduct(name);
+      if (context.mounted) {
+        context.pop();
+      }
+    }
+  }
+
+  Future<void> _addList(BuildContext context, String name) async {
+    final listsBox = Hive.box<ShoppingList>(listsBoxName);
+    if (listsBox.values
+        .any((l) => l.name.toLowerCase() == name.toLowerCase())) {
+      setState(() {
+        _validateNameExist = true;
+      });
+      return;
+    }
+    final newList = ShoppingList.create(name: name);
+    await listsBox.put(newList.id, newList);
+    if (context.mounted) {
+      context.goNamed(shoppingName, extra: newList);
+    }
+  }
+
+  Future<void> _addProduct(String name) async {
+    final productsBox = Hive.box<Product>(productsBoxName);
+    if (productsBox.values
+        .any((p) => p.name.toLowerCase() == name.toLowerCase())) {
+      setState(() {
+        _validateNameExist = true;
+      });
+      return;
+    }
+    final newProduct = Product.create(name);
+    await productsBox.put(newProduct.id, newProduct);
+    final ownerListId = widget.args.ownerList;
+    if (ownerListId != null) {
+      final listsBox = Hive.box<ShoppingList>(listsBoxName);
+      final currentShoppingList = listsBox.get(ownerListId);
+      currentShoppingList?.addProduct(newProduct.id);
+    }
+  }
+
+  void _resetValidation() {
+    if (_validateNameExist) {
+      setState(() {
+        _validateNameExist = false;
+      });
+    }
+  }
+
+  String? _errorMsg(AppLocalizations loc, ItemType type) =>
+      _validateNameExist ? loc.createItemExistError(type) : null;
 }
 
 enum ItemType {

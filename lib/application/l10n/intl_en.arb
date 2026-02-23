@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2026-02-23T16:37:02.336153",
+  "@@last_modified": "2026-02-23T22:17:52.245743",
   "applicationName": "Placeholder",
   "@applicationName": {
     "type": "text",
@@ -128,6 +128,16 @@
   },
   "createProductNameHint": "e.g. Oat Milk",
   "@createProductNameHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductExistError": "Product exist",
+  "@createProductExistError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListExistError": "List exist",
+  "@createListExistError": {
     "type": "text",
     "placeholders": {}
   }

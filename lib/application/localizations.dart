@@ -98,6 +98,12 @@ class AppLocalizations {
   String get createProductNameHint =>
       Intl.message('например, Овсяное молоко', name: 'createProductNameHint');
 
+  String get createProductExistError =>
+      Intl.message('Такой продукт есть', name: 'createProductExistError');
+
+  String get createListExistError =>
+      Intl.message('Такой список есть', name: 'createListExistError');
+
   String createItemTitle(ItemType type) => switch (type) {
         ItemType.list => createListTitle,
         ItemType.product => createProductTitle,
@@ -126,6 +132,11 @@ class AppLocalizations {
   String createItemNameHint(ItemType type) => switch (type) {
         ItemType.list => createListNameHint,
         ItemType.product => createProductNameHint,
+      };
+
+  String createItemExistError(ItemType type) => switch (type) {
+        ItemType.list => createListExistError,
+        ItemType.product => createProductExistError,
       };
 }
 

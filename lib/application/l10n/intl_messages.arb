@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-02-23T16:36:27.508711",
+  "@@last_modified": "2026-02-23T22:16:04.578217",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -128,6 +128,16 @@
   },
   "createProductNameHint": "например, Овсяное молоко",
   "@createProductNameHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductExistError": "Такой продукт есть",
+  "@createProductExistError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListExistError": "Такой список есть",
+  "@createListExistError": {
     "type": "text",
     "placeholders": {}
   }
