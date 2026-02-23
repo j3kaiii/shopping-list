@@ -14,4 +14,16 @@
 <string name="btnCancel">Отменить</string>
 <string name="btnOk">OK</string>
 <string name="hintCreateName">Придумайте название</string>
+<string name="createListTitle">Создать список</string>
+<string name="createListBottomButton">Создать список</string>
+<string name="createListHeader">Создать список покупок</string>
+<string name="createListSubheader">Организуйте свои покупки с помощью нового списка</string>
+<string name="createListNameLabel">НАЗВАНИЕ СПИСКА</string>
+<string name="createListNameHint">например, Еженедельные продукты</string>
+<string name="createProductTitle">Добавить продукт</string>
+<string name="createProductBottomButton">Добавить в базу</string>
+<string name="createProductHeader">Что вам нужно сегодня?</string>
+<string name="createProductSubheader">Добавьте продукт в свою цифровую кладовую</string>
+<string name="createProductNameLabel">НАЗВАНИЕ ПРОДУКТА</string>
+<string name="createProductNameHint">например, Овсяное молоко</string>
 </resources>

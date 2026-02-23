@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 
 class CreateItemScreenArgs {
@@ -27,10 +28,12 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    final type = widget.args.type;
     return CommonContentScreen(
-      title: 'Add New Item',
+      title: loc.createItemTitle(type),
       showBackButton: true,
-      bottomButtonText: 'Add to Database',
+      bottomButtonText: loc.createItemBottomButton(type),
       onBottomButtonPressed: () {
         // TODO
       },
@@ -40,9 +43,9 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            const Text(
-              'What do you need today?',
-              style: TextStyle(
+            Text(
+              loc.createItemHeader(type),
+              style: const TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
@@ -50,16 +53,16 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Add an item to your digital pantry.',
+              loc.createItemSubheader(type),
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[600],
               ),
             ),
             const SizedBox(height: 40),
-            const Text(
-              'ITEM NAME',
-              style: TextStyle(
+            Text(
+              loc.createItemNameLabel(type),
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF3B3BFF),
@@ -67,11 +70,10 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            // Text field
             TextField(
               controller: _itemNameController,
               decoration: InputDecoration(
-                hintText: 'e.g. Oat Milk',
+                hintText: loc.createItemNameHint(type),
                 hintStyle: TextStyle(
                   color: Colors.grey[400],
                   fontSize: 16,

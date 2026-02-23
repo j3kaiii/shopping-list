@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multiple_localization/multiple_localization.dart';
 import 'package:shopping_list_example/application/l10n/messages_all_locales.dart';
+import 'package:shopping_list_example/screens/create_item_screen.dart';
 
 typedef DelegateBuilder<T> = FutureOr<T> Function(String locale);
 
@@ -57,6 +58,75 @@ class AppLocalizations {
   String get btnOk => Intl.message('OK', name: 'btnOk');
   String get hintCreateName =>
       Intl.message('Придумайте название', name: 'hintCreateName');
+
+  String get createListTitle =>
+      Intl.message('Создать список', name: 'createListTitle');
+
+  String get createListBottomButton =>
+      Intl.message('Создать список', name: 'createListBottomButton');
+
+  String get createListHeader =>
+      Intl.message('Создать список покупок', name: 'createListHeader');
+
+  String get createListSubheader =>
+      Intl.message('Организуйте свои покупки с помощью нового списка',
+          name: 'createListSubheader');
+
+  String get createListNameLabel =>
+      Intl.message('НАЗВАНИЕ СПИСКА', name: 'createListNameLabel');
+
+  String get createListNameHint =>
+      Intl.message('например, Еженедельные продукты',
+          name: 'createListNameHint');
+
+  String get createProductTitle =>
+      Intl.message('Добавить продукт', name: 'createProductTitle');
+
+  String get createProductBottomButton =>
+      Intl.message('Добавить в базу', name: 'createProductBottomButton');
+
+  String get createProductHeader =>
+      Intl.message('Что вам нужно сегодня?', name: 'createProductHeader');
+
+  String get createProductSubheader =>
+      Intl.message('Добавьте продукт в свою цифровую кладовую',
+          name: 'createProductSubheader');
+
+  String get createProductNameLabel =>
+      Intl.message('НАЗВАНИЕ ПРОДУКТА', name: 'createProductNameLabel');
+
+  String get createProductNameHint =>
+      Intl.message('например, Овсяное молоко', name: 'createProductNameHint');
+
+  String createItemTitle(ItemType type) => switch (type) {
+        ItemType.list => createListTitle,
+        ItemType.product => createProductTitle,
+      };
+
+  String createItemBottomButton(ItemType type) => switch (type) {
+        ItemType.list => createListBottomButton,
+        ItemType.product => createProductBottomButton,
+      };
+
+  String createItemHeader(ItemType type) => switch (type) {
+        ItemType.list => createListHeader,
+        ItemType.product => createProductHeader,
+      };
+
+  String createItemSubheader(ItemType type) => switch (type) {
+        ItemType.list => createListSubheader,
+        ItemType.product => createProductSubheader,
+      };
+
+  String createItemNameLabel(ItemType type) => switch (type) {
+        ItemType.list => createListNameLabel,
+        ItemType.product => createProductNameLabel,
+      };
+
+  String createItemNameHint(ItemType type) => switch (type) {
+        ItemType.list => createListNameHint,
+        ItemType.product => createProductNameHint,
+      };
 }
 
 class DefLocalizationsDelegate<T> extends LocalizationsDelegate<T> {

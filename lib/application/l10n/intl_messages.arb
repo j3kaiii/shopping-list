@@ -1,5 +1,6 @@
 {
-  "@@last_modified": "2024-07-27T14:50:41.416521",
+  "@@locale": "ru",
+  "@@last_modified": "2026-02-23T16:36:27.508711",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -67,6 +68,66 @@
   },
   "hintCreateName": "Придумайте название",
   "@hintCreateName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListTitle": "Создать список",
+  "@createListTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListBottomButton": "Создать список",
+  "@createListBottomButton": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListHeader": "Создать список покупок",
+  "@createListHeader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListSubheader": "Организуйте свои покупки с помощью нового списка",
+  "@createListSubheader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListNameLabel": "НАЗВАНИЕ СПИСКА",
+  "@createListNameLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListNameHint": "например, Еженедельные продукты",
+  "@createListNameHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductTitle": "Добавить продукт",
+  "@createProductTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductBottomButton": "Добавить в базу",
+  "@createProductBottomButton": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductHeader": "Что вам нужно сегодня?",
+  "@createProductHeader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductSubheader": "Добавьте продукт в свою цифровую кладовую",
+  "@createProductSubheader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductNameLabel": "НАЗВАНИЕ ПРОДУКТА",
+  "@createProductNameLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductNameHint": "например, Овсяное молоко",
+  "@createProductNameHint": {
     "type": "text",
     "placeholders": {}
   }

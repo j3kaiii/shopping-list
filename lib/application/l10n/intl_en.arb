@@ -1,5 +1,6 @@
 {
-  "@@last_modified": "2024-07-27T14:54:43.959774",
+  "@@locale": "en",
+  "@@last_modified": "2026-02-23T16:37:02.336153",
   "applicationName": "Placeholder",
   "@applicationName": {
     "type": "text",
@@ -67,6 +68,66 @@
   },
   "hintCreateName": "Come up with a name",
   "@hintCreateName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListTitle": "Create New List",
+  "@createListTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListBottomButton": "Create List",
+  "@createListBottomButton": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListHeader": "Create a Shopping List",
+  "@createListHeader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListSubheader": "Organize your shopping with a new list",
+  "@createListSubheader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListNameLabel": "LIST NAME",
+  "@createListNameLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createListNameHint": "e.g. Weekly Groceries",
+  "@createListNameHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductTitle": "Add New Product",
+  "@createProductTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductBottomButton": "Add to Database",
+  "@createProductBottomButton": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductHeader": "What do you need today?",
+  "@createProductHeader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductSubheader": "Add an item to your digital pantry",
+  "@createProductSubheader": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductNameLabel": "ITEM NAME",
+  "@createProductNameLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createProductNameHint": "e.g. Oat Milk",
+  "@createProductNameHint": {
     "type": "text",
     "placeholders": {}
   }
