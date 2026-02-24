@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2026-02-23T22:17:52.245743",
+  "@@last_modified": "2026-02-24T22:34:11.117206",
   "applicationName": "Placeholder",
   "@applicationName": {
     "type": "text",
@@ -63,6 +63,16 @@
   },
   "btnOk": "OK",
   "@btnOk": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnEdit": "Edit",
+  "@btnEdit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnDelete": "Delete",
+  "@btnDelete": {
     "type": "text",
     "placeholders": {}
   },

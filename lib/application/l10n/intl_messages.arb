@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-02-23T22:16:04.578217",
+  "@@last_modified": "2026-02-24T22:33:54.709799",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -63,6 +63,16 @@
   },
   "btnOk": "OK",
   "@btnOk": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnEdit": "Редактировать",
+  "@btnEdit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnDelete": "Удалить",
+  "@btnDelete": {
     "type": "text",
     "placeholders": {}
   },

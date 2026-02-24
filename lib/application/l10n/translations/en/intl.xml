@@ -13,6 +13,8 @@
   <string name="btnAdd">Add</string>
   <string name="btnCancel">Cancel</string>
   <string name="btnOk">OK</string>
+  <string name="btnEdit">Edit</string>
+  <string name="btnDelete">Delete</string>
   <string name="hintCreateName">Come up with a name</string>
   <string name="createListTitle">Create New List</string>
   <string name="createListBottomButton">Create List</string>

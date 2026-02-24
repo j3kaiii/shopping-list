@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 
@@ -23,6 +25,7 @@ class ShoppingListTile extends StatelessWidget {
   }
 
   Widget _buildTitle(BuildContext context) {
+    final buttonKey = GlobalKey();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -30,7 +33,11 @@ class ShoppingListTile extends StatelessWidget {
           shoppingList.name,
           style: context.theme.buttonTextStyle,
         ),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+        IconButton(
+          key: buttonKey,
+          onPressed: () => _showActions(context, buttonKey),
+          icon: const Icon(Icons.more_vert),
+        ),
       ],
     );
   }
@@ -61,5 +68,40 @@ class ShoppingListTile extends StatelessWidget {
       onPressed: () {},
       child: const Text('Continue shopping'),
     );
+  }
+
+  void _showActions(BuildContext context, GlobalKey buttonKey) {
+    const editKey = 'edit';
+    const deleteKey = 'delete';
+    final loc = context.loc;
+    final RenderBox button =
+        buttonKey.currentContext!.findRenderObject() as RenderBox;
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+    final RelativeRect position = RelativeRect.fromRect(
+      Rect.fromPoints(
+        button.localToGlobal(Offset.zero, ancestor: overlay),
+        button.localToGlobal(button.size.bottomRight(Offset.zero),
+            ancestor: overlay),
+      ),
+      Offset.zero & overlay.size,
+    );
+
+    showMenu<String>(
+      context: context,
+      position: position,
+      items: [
+        PopupMenuItem<String>(value: editKey, child: Text(loc.btnEdit)),
+        PopupMenuItem<String>(value: deleteKey, child: Text(loc.btnDelete)),
+      ],
+    ).then((value) {
+      if (value == editKey) {
+        if (context.mounted) {
+          context.goNamed(shoppingName, extra: shoppingList);
+        }
+      } else if (value == deleteKey) {
+        // TODO
+      }
+    });
   }
 }

@@ -48,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
       'applicationName': MessageLookupByLibrary.simpleMessage('Рабочее название'),
     'btnAdd': MessageLookupByLibrary.simpleMessage('Добавить'),
     'btnCancel': MessageLookupByLibrary.simpleMessage('Отменить'),
+    'btnDelete': MessageLookupByLibrary.simpleMessage('Удалить'),
+    'btnEdit': MessageLookupByLibrary.simpleMessage('Редактировать'),
     'btnOk': MessageLookupByLibrary.simpleMessage('OK'),
     'createListBottomButton': MessageLookupByLibrary.simpleMessage('Создать список'),
     'createListExistError': MessageLookupByLibrary.simpleMessage('Такой список есть'),

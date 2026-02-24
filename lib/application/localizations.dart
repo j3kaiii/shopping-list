@@ -56,6 +56,8 @@ class AppLocalizations {
   String get btnAdd => Intl.message('Добавить', name: 'btnAdd');
   String get btnCancel => Intl.message('Отменить', name: 'btnCancel');
   String get btnOk => Intl.message('OK', name: 'btnOk');
+  String get btnEdit => Intl.message('Редактировать', name: 'btnEdit');
+  String get btnDelete => Intl.message('Удалить', name: 'btnDelete');
   String get hintCreateName =>
       Intl.message('Придумайте название', name: 'hintCreateName');
 

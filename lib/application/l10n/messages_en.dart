@@ -48,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
       'applicationName': MessageLookupByLibrary.simpleMessage('Placeholder'),
     'btnAdd': MessageLookupByLibrary.simpleMessage('Add'),
     'btnCancel': MessageLookupByLibrary.simpleMessage('Cancel'),
+    'btnDelete': MessageLookupByLibrary.simpleMessage('Delete'),
+    'btnEdit': MessageLookupByLibrary.simpleMessage('Edit'),
     'btnOk': MessageLookupByLibrary.simpleMessage('OK'),
     'createListBottomButton': MessageLookupByLibrary.simpleMessage('Create List'),
     'createListExistError': MessageLookupByLibrary.simpleMessage('List exist'),
