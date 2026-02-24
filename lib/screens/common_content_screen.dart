@@ -27,7 +27,7 @@ class CommonContentScreen extends StatelessWidget {
     final theme = context.theme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(title, style: theme.titleTextStyle),
+        title: Text(title, style: theme.titleH2TextStyle),
         centerTitle: true,
         actions: actions,
         leading: showBackButton
@@ -39,9 +39,10 @@ class CommonContentScreen extends StatelessWidget {
       ),
       drawer: showBackButton ? null : _buildMenu(context),
       body: child,
-      bottomNavigationBar: bottomButtonText != null && onBottomButtonPressed != null
-          ? _buildBottomButton(context)
-          : null,
+      bottomNavigationBar:
+          bottomButtonText != null && onBottomButtonPressed != null
+              ? _buildBottomButton(context)
+              : null,
       floatingActionButton: onFABPressed != null
           ? IconButton.filled(
               iconSize: 40.0,
