@@ -43,6 +43,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = context.loc;
+    final theme = context.theme;
     final type = widget.args.type;
     return CommonContentScreen(
       title: loc.createItemTitle(type),
@@ -57,44 +58,30 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
             const SizedBox(height: 24),
             Text(
               loc.createItemHeader(type),
-              style: const TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+              style: theme.titleH1TextStyle,
             ),
             const SizedBox(height: 8),
             Text(
               loc.createItemSubheader(type),
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
+              style: theme.subheaderTextStyle,
             ),
             const SizedBox(height: 40),
             Text(
               loc.createItemNameLabel(type),
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF3B3BFF),
-                letterSpacing: 0.5,
-              ),
+              style: theme.labelTextStyle,
             ),
             const SizedBox(height: 8),
             TextField(
               controller: _itemNameController,
               decoration: InputDecoration(
                 hintText: loc.createItemNameHint(type),
-                hintStyle: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: 16,
+                hintStyle: theme.inputHintStyle,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: theme.inputBorderColor),
                 ),
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF3B3BFF)),
-                ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF3B3BFF), width: 2),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide:
+                      BorderSide(color: theme.inputBorderColor, width: 2),
                 ),
                 errorText: _errorMsg(loc, type),
               ),

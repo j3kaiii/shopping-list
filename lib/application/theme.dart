@@ -30,17 +30,28 @@ class ShoppingThemeData extends CustomThemeData {
     Color primaryBgColor = _Colors.greyLight,
     Color secondaryBgColor = _Colors.blue,
     Color textColor = _Colors.greyDark,
-    TextStyle? titleTextStyle,
+    Color? inputBorderColor,
+    TextStyle? titleH1TextStyle,
+    TextStyle? titleH2TextStyle,
     TextStyle? buttonTextStyle,
     TextStyle? defaultTextStyle,
     TextStyle? hintTextStyle,
+    TextStyle? subheaderTextStyle,
+    TextStyle? labelTextStyle,
+    TextStyle? inputHintStyle,
     ButtonStyle? titledButtonStyle,
     ButtonStyle? iconButtonStyle,
   }) {
     coloredBackground ??=
         const Color.fromARGB(255, 218, 243, 244).withValues(alpha: .9);
 
-    titleTextStyle ??= const TextStyle(
+    titleH1TextStyle ??= const TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      color: _Colors.black,
+    );
+
+    titleH2TextStyle ??= const TextStyle(
       color: _Colors.black,
       fontSize: 24,
       fontWeight: FontWeight.w600,
@@ -63,6 +74,25 @@ class ShoppingThemeData extends CustomThemeData {
       fontSize: 16,
       fontWeight: FontWeight.normal,
     );
+
+    subheaderTextStyle ??= TextStyle(
+      fontSize: 16,
+      color: Colors.grey[600],
+    );
+
+    labelTextStyle ??= const TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      color: Color(0xFF3B3BFF),
+      letterSpacing: 0.5,
+    );
+
+    inputHintStyle ??= TextStyle(
+      color: Colors.grey[400],
+      fontSize: 16,
+    );
+
+    inputBorderColor ??= const Color(0xFF3B3BFF);
 
     titledButtonStyle ??= ButtonStyle(
         textStyle: const WidgetStatePropertyAll(TextStyle(
@@ -89,10 +119,15 @@ class ShoppingThemeData extends CustomThemeData {
       primaryBgColor: primaryBgColor,
       secondaryBgColor: secondaryBgColor,
       textColor: textColor,
-      titleTextStyle: titleTextStyle,
+      inputBorderColor: inputBorderColor,
+      titleH1TextStyle: titleH1TextStyle,
+      titleH2TextStyle: titleH2TextStyle,
       buttonTextStyle: buttonTextStyle,
       defaultTextStyle: defaultTextStyle,
       hintTextStyle: hintTextStyle,
+      subheaderTextStyle: subheaderTextStyle,
+      labelTextStyle: labelTextStyle,
+      inputHintStyle: inputHintStyle,
       titledButtonStyle: titledButtonStyle,
       iconButtonStyle: iconButtonStyle,
     );
@@ -104,10 +139,15 @@ class ShoppingThemeData extends CustomThemeData {
     required this.primaryBgColor,
     required this.secondaryBgColor,
     required this.textColor,
-    required this.titleTextStyle,
+    required this.inputBorderColor,
+    required this.titleH1TextStyle,
+    required this.titleH2TextStyle,
     required this.buttonTextStyle,
     required this.defaultTextStyle,
     required this.hintTextStyle,
+    required this.subheaderTextStyle,
+    required this.labelTextStyle,
+    required this.inputHintStyle,
     required this.titledButtonStyle,
     required this.iconButtonStyle,
   });
@@ -121,11 +161,16 @@ class ShoppingThemeData extends CustomThemeData {
   // Дополнительный цвет фона
   final Color? secondaryBgColor;
   final Color? textColor;
+  final Color inputBorderColor;
 
-  final TextStyle? titleTextStyle;
+  final TextStyle? titleH1TextStyle;
+  final TextStyle? titleH2TextStyle;
   final TextStyle? buttonTextStyle;
   final TextStyle? defaultTextStyle;
   final TextStyle? hintTextStyle;
+  final TextStyle? subheaderTextStyle;
+  final TextStyle? labelTextStyle;
+  final TextStyle? inputHintStyle;
 
   final ButtonStyle? titledButtonStyle;
   final ButtonStyle? iconButtonStyle;
