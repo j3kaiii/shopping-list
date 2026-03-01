@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_list_example/application/consts.dart';
-import 'package:animations/animations.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/shopping_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
