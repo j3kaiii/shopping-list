@@ -9,8 +9,8 @@ const loading = '/loading';
 const shoppingName = 'shopping';
 const shoppingPath = shoppingName;
 
-const products = 'products';
-const productsPath = products;
+const productsName = 'products';
+const productsPath = productsName;
 
 const createName = 'create';
 const createPath = createName;

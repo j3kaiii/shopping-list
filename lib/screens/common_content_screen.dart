@@ -116,7 +116,7 @@ class CommonContentScreen extends StatelessWidget {
             _buildMenuButtom(
               context,
               'Products',
-              () => context.goNamed(products),
+              () => context.goNamed(productsName),
             ),
             _buildMenuButtom(context, 'Settings', () => context.goNamed(root)),
           ],

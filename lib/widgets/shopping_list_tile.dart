@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:animations/animations.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
+import 'package:shopping_list_example/screens/shopping_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 
 class ShoppingListTile extends StatefulWidget {
@@ -81,7 +82,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
-            onPressed: () => print('called edit'),
+            onPressed: () => _editList(context),
             icon: const Icon(Icons.edit),
             padding: EdgeInsets.zero,
           ),
@@ -92,6 +93,11 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
           ),
         ],
       );
+
+  void _editList(BuildContext content) {
+    context.goNamed(shoppingName,
+        extra: ShoppingScreenArgs(widget.shoppingList, editMode: true));
+  }
 
   Widget _buildAnimatedChild({
     required bool isVisible,

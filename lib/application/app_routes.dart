@@ -24,12 +24,12 @@ final appRoutes = GoRouter(
           path: shoppingPath,
           name: shoppingName,
           builder: (context, state) => ShoppingScreen(
-            shopping: state.extra as ShoppingList,
+            shoppingArgs: state.extra as ShoppingScreenArgs,
           ),
         ),
         GoRoute(
           path: productsPath,
-          name: products,
+          name: productsName,
           builder: (context, state) => const ProductsScreen(),
         ),
         GoRoute(
