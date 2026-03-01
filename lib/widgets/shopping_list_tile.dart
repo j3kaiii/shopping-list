@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_list_example/application/consts.dart';
+import 'package:animations/animations.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 
-class ShoppingListTile extends StatelessWidget {
+class ShoppingListTile extends StatefulWidget {
   final ShoppingList shoppingList;
   const ShoppingListTile(this.shoppingList, {super.key});
+
+  @override
+  State<ShoppingListTile> createState() => _ShoppingListTileState();
+}
+
+class _ShoppingListTileState extends State<ShoppingListTile> {
+  static const _singleActionWidth = 45.0;
+  static const _actionsHeight = 45.0;
+  static const _doubleActionWidth = 100.0;
+  bool _showFullActions = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +36,76 @@ class ShoppingListTile extends StatelessWidget {
   }
 
   Widget _buildTitle(BuildContext context) {
-    final buttonKey = GlobalKey();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          shoppingList.name,
+          widget.shoppingList.name,
           style: context.theme.buttonTextStyle,
+          overflow: TextOverflow.ellipsis,
         ),
-        IconButton(
-          key: buttonKey,
-          onPressed: () => _showActions(context, buttonKey),
-          icon: const Icon(Icons.more_vert),
-        ),
+        _buildActions(context),
       ],
+    );
+  }
+
+  Widget _buildActions(BuildContext context) {
+    return SizedBox(
+      height: _actionsHeight,
+      child: Row(
+        children: [
+          _buildAnimatedChild(
+            isVisible: !_showFullActions,
+            width: _singleActionWidth,
+            child: _buildMoreAction(context),
+          ),
+          _buildAnimatedChild(
+            isVisible: _showFullActions,
+            width: _doubleActionWidth,
+            child: _buildEditActions(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMoreAction(BuildContext context) {
+    return IconButton(
+      onPressed: _showActions,
+      icon: const Icon(Icons.more_vert),
+    );
+  }
+
+  Widget _buildEditActions(BuildContext context) => Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+            onPressed: () => print('called edit'),
+            icon: const Icon(Icons.edit),
+            padding: EdgeInsets.zero,
+          ),
+          IconButton(
+            onPressed: () => print('called delete'),
+            icon: const Icon(Icons.delete),
+            padding: EdgeInsets.zero,
+          ),
+        ],
+      );
+
+  Widget _buildAnimatedChild({
+    required bool isVisible,
+    required double width,
+    required Widget child,
+  }) {
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+      child: SizedBox(
+        width: isVisible ? width : 0,
+        height: _actionsHeight,
+        child: isVisible ? child : null,
+      ),
     );
   }
 
@@ -70,37 +137,15 @@ class ShoppingListTile extends StatelessWidget {
     );
   }
 
-  void _showActions(BuildContext context, GlobalKey buttonKey) {
-    const editKey = 'edit';
-    const deleteKey = 'delete';
-    final loc = context.loc;
-    final RenderBox button =
-        buttonKey.currentContext!.findRenderObject() as RenderBox;
-    final RenderBox overlay =
-        Overlay.of(context).context.findRenderObject() as RenderBox;
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(Offset.zero, ancestor: overlay),
-        button.localToGlobal(button.size.bottomRight(Offset.zero),
-            ancestor: overlay),
-      ),
-      Offset.zero & overlay.size,
-    );
-
-    showMenu<String>(
-      context: context,
-      position: position,
-      items: [
-        PopupMenuItem<String>(value: editKey, child: Text(loc.btnEdit)),
-        PopupMenuItem<String>(value: deleteKey, child: Text(loc.btnDelete)),
-      ],
-    ).then((value) {
-      if (value == editKey) {
-        if (context.mounted) {
-          context.goNamed(shoppingName, extra: shoppingList);
-        }
-      } else if (value == deleteKey) {
-        // TODO
+  void _showActions() {
+    setState(() {
+      _showFullActions = true;
+    });
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _showFullActions = false;
+        });
       }
     });
   }
