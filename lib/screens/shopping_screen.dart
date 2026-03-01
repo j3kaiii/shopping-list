@@ -3,32 +3,42 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
-import 'package:shopping_list_example/models/purchase_item/item.dart';
+import 'package:shopping_list_example/models/product/product.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
+import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
-import 'package:shopping_list_example/utils/item_box_extension.dart';
 import 'package:shopping_list_example/widgets/list_item.dart';
 import 'package:shopping_list_example/widgets/stub.dart';
+
+class ShoppingScreenArgs {
+  final ShoppingList shopping;
+  final bool editMode;
+
+  ShoppingScreenArgs(this.shopping, {required this.editMode});
+}
 
 /// Экран списка продуктов.
 ///
 /// При тапе на продукт отмечает его как купленный.
 class ShoppingScreen extends StatelessWidget {
-  final ShoppingList shopping;
-  const ShoppingScreen({super.key, required this.shopping});
+  final ShoppingScreenArgs shoppingArgs;
+  const ShoppingScreen({super.key, required this.shoppingArgs});
 
   @override
   Widget build(BuildContext context) {
+    final shopping = shoppingArgs.shopping;
     return CommonContentScreen(
       title: shopping.name,
+      showBackButton: true,
       actions: [_buildResetButton(context)],
+      onFABPressed: () => context.goNamed(productsName),
       child: FutureBuilder(
-        future: Hive.openBox<Item>(shopping.id),
+        future: Hive.openBox<ShoppingListItem>(shopping.id),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             return ShoppingContent(
-              box: snapshot.data as Box<Item>,
+              box: snapshot.data as Box<ShoppingListItem>,
               listId: shopping.id,
             );
           } else {
@@ -42,8 +52,8 @@ class ShoppingScreen extends StatelessWidget {
   Widget _buildResetButton(BuildContext context) {
     return IconButton(
       onPressed: () async {
-        final box = await Hive.openBox<Item>(shopping.id);
-        box.resetAllToUnpurchased();
+        // final box = await Hive.openBox<Product>(shopping.id);
+        // box.resetAllToUnpurchased();
       },
       icon: Transform.flip(
         flipX: true,
@@ -57,7 +67,7 @@ class ShoppingScreen extends StatelessWidget {
 
 class ShoppingContent extends StatefulWidget {
   final String listId;
-  final Box<Item> box;
+  final Box<ShoppingListItem> box;
 
   const ShoppingContent({super.key, required this.box, required this.listId});
 
@@ -66,7 +76,7 @@ class ShoppingContent extends StatefulWidget {
 }
 
 class _ShoppingContentState extends State<ShoppingContent> {
-  late final Box<Item> _productsBox;
+  late final Box<ShoppingListItem> _productsBox;
 
   @override
   void initState() {
@@ -88,27 +98,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
       child: SizedBox(
         height: double.maxFinite,
         width: double.maxFinite,
-        child: Stack(
-          children: [
-            _buildList(context, loc),
-            _buildAddProduct(context, loc),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAddProduct(BuildContext context, AppLocalizations loc) {
-    return PositionedDirectional(
-      end: 20,
-      bottom: 20,
-      child: ElevatedButton.icon(
-        onPressed: () => context.pushNamed(
-          products,
-          extra: _productsBox,
-        ),
-        icon: const Icon(Icons.add),
-        label: Text(loc.btnAdd),
+        child: _buildList(context, loc),
       ),
     );
   }
@@ -119,7 +109,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
       valueListenable: _productsBox.listenable(),
       builder: ((context, value, _) {
         final items = value.values.toList();
-        items.sort((a, b) => b.isActive ? 1 : -1);
+        // items.sort((a, b) => b.isActive ? 1 : -1);
 
         return items.isEmpty
             ? Stub(loc.emptyShoppingListTitle)
@@ -128,9 +118,9 @@ class _ShoppingContentState extends State<ShoppingContent> {
                 itemBuilder: (context, index) {
                   final item = items[index];
                   return ListItem(
-                    name: item.name,
-                    color: item.isActive ? theme.activeItemColor : null,
-                    onTap: () => _onItemTap(item),
+                    name: 'name', // item.name,
+                    color: theme.activeItemColor,
+                    onTap: () {}, // => _onItemTap(item),
                   );
                 },
               );
@@ -138,7 +128,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
     );
   }
 
-  void _onItemTap(Item item) {
-    _productsBox.put(item.id, item.switchActive());
+  void _onItemTap(Product item) {
+    // _productsBox.put(item.id, item.switchActive());
   }
 }

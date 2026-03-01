@@ -11,8 +11,9 @@ import 'package:shopping_list_example/utils/context_extension.dart';
 class CreateItemScreenArgs {
   final ItemType type;
   final String? ownerList;
+  final Box<Product>? productBox;
 
-  const CreateItemScreenArgs(this.type, {this.ownerList});
+  const CreateItemScreenArgs(this.type, {this.ownerList, this.productBox});
 }
 
 class CreateItemScreen extends StatefulWidget {
@@ -123,7 +124,12 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
   }
 
   Future<void> _addProduct(String name) async {
-    final productsBox = Hive.box<Product>(productsBoxName);
+    final productsBox = widget.args.productBox;
+    if (productsBox == null) {
+      // TODO: возможна ли такая ситуация?
+      // Показать предупреждение?
+      return;
+    }
     if (productsBox.values
         .any((p) => p.name.toLowerCase() == name.toLowerCase())) {
       setState(() {
