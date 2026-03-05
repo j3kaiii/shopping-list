@@ -6,6 +6,7 @@ import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/product/product.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
+import 'package:shopping_list_example/screens/shopping_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
 
 class CreateItemScreenArgs {
@@ -119,7 +120,8 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
     final newList = ShoppingList.create(name: name);
     await listsBox.put(newList.id, newList);
     if (context.mounted) {
-      context.goNamed(shoppingName, extra: newList);
+      context.goNamed(shoppingName,
+          extra: ShoppingScreenArgs(newList, editMode: true));
     }
   }
 
