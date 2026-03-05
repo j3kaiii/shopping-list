@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2026-02-24T22:34:11.117206",
+  "@@last_modified": "2026-03-05T23:20:55.175399",
   "applicationName": "Placeholder",
   "@applicationName": {
     "type": "text",
@@ -148,6 +148,11 @@
   },
   "createListExistError": "List exist",
   "@createListExistError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteListDialogTitle": "Do you want to delete current list?",
+  "@deleteListDialogTitle": {
     "type": "text",
     "placeholders": {}
   }

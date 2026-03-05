@@ -30,4 +30,5 @@
   <string name="createProductNameHint">например, Овсяное молоко</string>
   <string name="createProductExistError">Такой продукт есть</string>
   <string name="createListExistError">Такой список есть</string>
+  <string name="deleteListDialogTitle">Хотите удалить список?</string>
 </resources>

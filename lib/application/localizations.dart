@@ -106,6 +106,9 @@ class AppLocalizations {
   String get createListExistError =>
       Intl.message('Такой список есть', name: 'createListExistError');
 
+  String get deleteListDialogTitle =>
+      Intl.message('Хотите удалить список?', name: 'deleteListDialogTitle');
+
   String createItemTitle(ItemType type) => switch (type) {
         ItemType.list => createListTitle,
         ItemType.product => createProductTitle,

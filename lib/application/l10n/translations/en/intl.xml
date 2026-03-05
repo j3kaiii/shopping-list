@@ -30,4 +30,5 @@
   <string name="createProductNameHint">e.g. Oat Milk</string>
   <string name="createProductExistError">Product exist</string>
   <string name="createListExistError">List exist</string>
+  <string name="deleteListDialogTitle">Do you want to delete current list?</string>
 </resources>

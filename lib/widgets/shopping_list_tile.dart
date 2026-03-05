@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/shopping_screen.dart';
@@ -86,7 +87,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
             padding: EdgeInsets.zero,
           ),
           IconButton(
-            onPressed: () => print('called delete'),
+            onPressed: () => _deleteList(context),
             icon: const Icon(Icons.delete),
             padding: EdgeInsets.zero,
           ),
@@ -96,6 +97,30 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
   void _editList(BuildContext content) {
     context.goNamed(shoppingName,
         extra: ShoppingScreenArgs(widget.shoppingList, editMode: true));
+  }
+
+  Future<void> _deleteList(BuildContext context) async {
+    final loc = context.loc;
+    final res = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(loc.deleteListDialogTitle),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(loc.btnCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(loc.btnDelete),
+          ),
+        ],
+      ),
+    );
+    if (res == true) {
+      final box = Hive.box<ShoppingList>(listsBoxName);
+      await box.delete(widget.shoppingList.id);
+    }
   }
 
   Widget _buildAnimatedChild({

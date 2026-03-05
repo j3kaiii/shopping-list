@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-02-24T22:33:54.709799",
+  "@@last_modified": "2026-03-05T23:19:42.751526",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -148,6 +148,11 @@
   },
   "createListExistError": "Такой список есть",
   "@createListExistError": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteListDialogTitle": "Хотите удалить список?",
+  "@deleteListDialogTitle": {
     "type": "text",
     "placeholders": {}
   }
