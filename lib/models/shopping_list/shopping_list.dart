@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
 import 'package:uuid/v4.dart';
@@ -22,36 +23,39 @@ class ShoppingList extends HiveObject {
   ShoppingList.create({required this.name})
       : id = const UuidV4().generate(),
         items = [];
-  
-  ShoppingList addProduct(String productId) {
-    if (containsProduct(productId)) {
+
+  /// Добавляет новый [ShoppingListItem] к списку.
+  ShoppingList addProduct(ShoppingListItem product) {
+    if (containsProduct(product.baseProductId)) {
       return this;
     }
-    
+
     return ShoppingList(
       id: id,
       name: name,
       items: [
         ...items,
-        ShoppingListItem(productId: productId),
+        product,
       ],
     );
   }
 
+  /// Удаляет из списка [ShoppingListItem] по id базового продукта.
   ShoppingList removeProduct(String productId) {
     return ShoppingList(
       id: id,
       name: name,
-      items: items.where((item) => item.productId != productId).toList(),
+      items: items.where((item) => item.baseProductId != productId).toList(),
     );
   }
 
+  /// Изменяет состояние покупки [ShoppingListItem] по id базового продукта.
   ShoppingList togglePurchaseStatus(String productId) {
     return ShoppingList(
       id: id,
       name: name,
       items: items.map((item) {
-        if (item.productId == productId) {
+        if (item.baseProductId == productId) {
           return item.copyWith(isPurchased: !item.isPurchased);
         }
         return item;
@@ -67,19 +71,18 @@ class ShoppingList extends HiveObject {
     );
   }
 
+  /// Проверяет состояние покупки [ShoppingListItem] по id базового продукта.
   bool isProductPurchased(String productId) {
     return items
-        .firstWhere(
-          (item) => item.productId == productId,
-          orElse: () => ShoppingListItem(
-            productId: productId,
-            isPurchased: false,
-          ),
-        )
-        .isPurchased;
+            .firstWhereOrNull(
+              (item) => item.baseProductId == productId,
+            )
+            ?.isPurchased ??
+        false;
   }
 
+  /// Проверяет наличие в списке [ShoppingListItem] по id базового продукта.
   bool containsProduct(String productId) {
-    return items.any((item) => item.productId == productId);
+    return items.any((item) => item.baseProductId == productId);
   }
 }

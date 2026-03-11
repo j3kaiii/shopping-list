@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
-import 'package:shopping_list_example/models/product/product.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
@@ -32,14 +31,14 @@ class ShoppingScreen extends StatelessWidget {
       title: shopping.name,
       showBackButton: true,
       actions: [_buildResetButton(context)],
-      onFABPressed: () => context.goNamed(productsName),
+      onFABPressed: () => context.goNamed(productsName, extra: shopping),
       child: FutureBuilder(
         future: Hive.openBox<ShoppingListItem>(shopping.id),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             return ShoppingContent(
               box: snapshot.data as Box<ShoppingListItem>,
-              listId: shopping.id,
+              list: shopping,
             );
           } else {
             return const CircularProgressIndicator();
@@ -66,10 +65,10 @@ class ShoppingScreen extends StatelessWidget {
 }
 
 class ShoppingContent extends StatefulWidget {
-  final String listId;
+  final ShoppingList list;
   final Box<ShoppingListItem> box;
 
-  const ShoppingContent({super.key, required this.box, required this.listId});
+  const ShoppingContent({super.key, required this.box, required this.list});
 
   @override
   State<ShoppingContent> createState() => _ShoppingContentState();
@@ -105,30 +104,23 @@ class _ShoppingContentState extends State<ShoppingContent> {
 
   Widget _buildList(BuildContext context, AppLocalizations loc) {
     final theme = context.theme;
-    return ValueListenableBuilder(
-      valueListenable: _productsBox.listenable(),
-      builder: ((context, value, _) {
-        final items = value.values.toList();
-        // items.sort((a, b) => b.isActive ? 1 : -1);
-
-        return items.isEmpty
-            ? Stub(loc.emptyShoppingListTitle)
-            : ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return ListItem(
-                    name: 'name', // item.name,
-                    color: theme.activeItemColor,
-                    onTap: () {}, // => _onItemTap(item),
-                  );
-                },
+    final items = widget.list.items;
+    return items.isEmpty
+        ? Stub(loc.emptyShoppingListTitle)
+        : ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return ListItem(
+                name: item.baseName,
+                color: theme.activeItemColor,
+                onTap: () => _onItemTap(item.baseProductId),
               );
-      }),
-    );
+            },
+          );
   }
 
-  void _onItemTap(Product item) {
-    // _productsBox.put(item.id, item.switchActive());
+  void _onItemTap(String productId) {
+    widget.list.togglePurchaseStatus(productId);
   }
 }

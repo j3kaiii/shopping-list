@@ -1,6 +1,7 @@
 // Boxes
 const listsBoxName = 'listsBox';
 const productsBoxName = 'productsBox';
+const itemsBoxName = 'itemsBox';
 
 // Routes
 const root = '/';

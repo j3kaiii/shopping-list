@@ -55,5 +55,6 @@ void runWithHive() async {
   Hive.registerAdapter(ShoppingListAdapter());
   Hive.registerAdapter(ShoppingListItemAdapter());
   await Hive.openBox<ShoppingList>(listsBoxName);
+  await Hive.openBox<ShoppingListItem>(itemsBoxName);
   runApp(const ShoppingApp());
 }

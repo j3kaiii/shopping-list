@@ -5,6 +5,7 @@ import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/models/product/product.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
+import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/screens/shopping_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
@@ -145,7 +146,22 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
     if (ownerListId != null) {
       final listsBox = Hive.box<ShoppingList>(listsBoxName);
       final currentShoppingList = listsBox.get(ownerListId);
-      currentShoppingList?.addProduct(newProduct.id);
+      // Так как это новый созданный продукт,
+      // то в списке его не должно быть.
+      // TODO: стоит добавить в попапе галочку с текстом:
+      // "добавить в текущий список покупок"
+      if (currentShoppingList?.containsProduct(newProduct.id) ?? false) {
+        // какая-то ошибка
+      }
+      // добавить новый айтем в список,
+      // сохранить все в бд
+      if (currentShoppingList != null) {
+        final newListItem = ShoppingListItem.create(newProduct);
+        currentShoppingList.addProduct(newListItem);
+        listsBox.put(currentShoppingList.id, currentShoppingList);
+        final shoppingItems = Hive.box<ShoppingListItem>(itemsBoxName);
+        shoppingItems.put(newListItem.id, newListItem);
+      }
     }
   }
 

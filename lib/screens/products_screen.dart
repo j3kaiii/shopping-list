@@ -5,6 +5,8 @@ import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
 import 'package:shopping_list_example/application/theme.dart';
 import 'package:shopping_list_example/models/product/product.dart';
+import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
+import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
 import 'package:shopping_list_example/screens/create_item_screen.dart';
 import 'package:shopping_list_example/utils/context_extension.dart';
@@ -16,7 +18,8 @@ import 'package:shopping_list_example/widgets/stub.dart';
 /// и по тапу добавляет продукт в список покупок.
 /// Все продукты, содержащиеся в текущем спике покупок, отмечены цветом.
 class ProductsScreen extends StatefulWidget {
-  const ProductsScreen({super.key});
+  final ShoppingList? shoppingList;
+  const ProductsScreen({this.shoppingList, super.key});
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
@@ -38,6 +41,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               _box = snapshot.data as Box<Product>;
               return ProductsContent(
                 productsBox: _box!,
+                shoppingList: widget.shoppingList,
               );
             } else {
               return const CircularProgressIndicator();
@@ -49,8 +53,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
 class ProductsContent extends StatefulWidget {
   final Box<Product> productsBox;
+  final ShoppingList? shoppingList;
+
   const ProductsContent({
     super.key,
+    this.shoppingList,
     required this.productsBox,
   });
 
@@ -60,11 +67,13 @@ class ProductsContent extends StatefulWidget {
 
 class _ProductsContentState extends State<ProductsContent> {
   late final Box<Product> _productsBox;
+  ShoppingList? _shoppingList;
 
   @override
   void initState() {
     super.initState();
     _productsBox = widget.productsBox;
+    _shoppingList = widget.shoppingList;
     // _productsBox.resetToContains(_shoppingBox);
   }
 
@@ -107,8 +116,9 @@ class _ProductsContentState extends State<ProductsContent> {
     Product item,
     ShoppingThemeData theme,
   ) {
+    final inList = _shoppingList?.containsProduct(item.id) ?? false;
     return Card.outlined(
-      color: theme.activeItemColor,
+      color: inList ? theme.activeItemColor : Colors.white,
       child: InkWell(
         onTap: () => _onItemTap(item),
         child: Padding(
@@ -119,16 +129,37 @@ class _ProductsContentState extends State<ProductsContent> {
     );
   }
 
+  /// Добавление/удаление продукта [ShoppingListItem] для списка покупок,
+  /// переданного параметром [ShoppingList] при переходе к экрану.
+  ///
+  /// Если данный [ShoppingListItem] содержится в списке,
+  /// то необходимо удалить его из списка и из бокса.
+  /// Если в списке такого нет, нужно создать экземпляр [ShoppingListItem],
+  /// сохранить его в боксе и добавить в список [ShoppingList].
+  /// ВАЖНО: переданный [Product] может содержаться в разных списках,
+  /// но он содержится там не в чистом виде, а в виде экземпляров [ShoppingListItem],
+  /// созданных на основе [Product].
+  /// Id таких [ShoppingListItem] должны быть уникальными, это не [Product] id.
   void _onItemTap(Product item) {
-    // final changed = item.switchActive();
-    // if (item.isActive) {
-    //   _productsBox.put(changed.id, changed);
-    //   _shoppingBox.delete(changed.id);
-    // } else {
-    //   final copy = Product.copy(changed);
-    //   _shoppingBox.put(copy.id, copy);
+    final list = _shoppingList;
+    if (list == null) return;
 
-    //   _productsBox.put(changed.id, changed);
-    // }
+    final shoppingItemsBox = Hive.box<ShoppingListItem>(itemsBoxName);
+    final listsBox = Hive.box<ShoppingList>(listsBoxName);
+
+    if (list.containsProduct(item.id)) {
+      final updatedList = list.removeProduct(item.id);
+      listsBox.put(updatedList.id, updatedList);
+      shoppingItemsBox.delete(item.id);
+    } else {
+      final newListItem = ShoppingListItem.create(item);
+      final updatedList = list.addProduct(newListItem);
+      listsBox.put(updatedList.id, updatedList);
+      shoppingItemsBox.put(newListItem.id, newListItem);
+    }
+
+    setState(() {
+      _shoppingList = listsBox.get(list.id);
+    });
   }
 }

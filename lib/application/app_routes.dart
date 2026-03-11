@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:shopping_list_example/application/consts.dart';
+import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/create_item_screen.dart';
 import 'package:shopping_list_example/screens/lists_screen.dart';
 import 'package:shopping_list_example/screens/loading_screen.dart';
@@ -29,7 +30,9 @@ final appRoutes = GoRouter(
         GoRoute(
           path: productsPath,
           name: productsName,
-          builder: (context, state) => const ProductsScreen(),
+          builder: (context, state) => ProductsScreen(
+            shoppingList: state.extra as ShoppingList?,
+          ),
         ),
         GoRoute(
           path: createPath,
