@@ -3,6 +3,7 @@
   <string name="applicationName">Placeholder</string>
   <string name="welcomeScreenTitle">Go Shopping!</string>
   <string name="listsScreenTitle">My Lists</string>
+  <string name="settingsScreenTitle">Settings</string>
   <string name="productsScreenTitle">My Products</string>
   <string name="emptyNameError">Enter name</string>
   <string name="existNameError">Such name already exists</string>

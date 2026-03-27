@@ -31,7 +31,7 @@ class ShoppingScreen extends StatelessWidget {
       title: shopping.name,
       showBackButton: true,
       actions: [_buildResetButton(context)],
-      onFABPressed: () => context.goNamed(productsName, extra: shopping),
+      onFABPressed: () => context.pushNamed(shoppingProducts, extra: shopping),
       child: FutureBuilder(
         future: Hive.openBox<ShoppingListItem>(shopping.id),
         builder: ((context, snapshot) {

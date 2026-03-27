@@ -21,26 +21,35 @@ final appRoutes = GoRouter(
       builder: (context, state) => const ListsScreen(),
       routes: [
         GoRoute(
-          path: shoppingPath,
-          name: shoppingName,
+          path: shopping,
+          name: shopping,
           builder: (context, state) => ShoppingScreen(
             shoppingArgs: state.extra as ShoppingScreenArgs,
           ),
+          routes: [
+            _createProductsRoute(shoppingProducts, common: false),
+          ],
         ),
-        GoRoute(
-          path: productsPath,
-          name: productsName,
-          builder: (context, state) => ProductsScreen(
-            shoppingList: state.extra as ShoppingList?,
-          ),
-        ),
-        GoRoute(
-          path: createPath,
-          name: createName,
-          builder: (context, state) =>
-              CreateItemScreen(state.extra as CreateItemScreenArgs),
-        ),
+        _createProductsRoute(commonProducts),
+        _createItemRoute(createList),
       ],
     ),
   ],
 );
+
+GoRoute _createProductsRoute(String route, {bool common = true}) => GoRoute(
+        path: route,
+        name: route,
+        builder: (context, state) => ProductsScreen(
+              shoppingList: state.extra as ShoppingList?,
+            ),
+        routes: [
+          _createItemRoute(common ? createCommonProduct : createShoppingProduct)
+        ]);
+
+GoRoute _createItemRoute(String route) => GoRoute(
+      path: route,
+      name: route,
+      builder: (context, state) =>
+          CreateItemScreen(state.extra as CreateItemScreenArgs),
+    );

@@ -121,7 +121,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
     final newList = ShoppingList.create(name: name);
     await listsBox.put(newList.id, newList);
     if (context.mounted) {
-      context.goNamed(shoppingName,
+      context.replaceNamed(shopping,
           extra: ShoppingScreenArgs(newList, editMode: true));
     }
   }

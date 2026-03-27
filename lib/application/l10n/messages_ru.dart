@@ -75,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
     'noSavedListsTitle': MessageLookupByLibrary.simpleMessage('Нет сохраненных списков покупок'),
     'noSavedProductsTitle': MessageLookupByLibrary.simpleMessage('Нет сохраненных продуктов'),
     'productsScreenTitle': MessageLookupByLibrary.simpleMessage('Мои продукты'),
+    'settingsScreenTitle': MessageLookupByLibrary.simpleMessage('Настройки'),
     'welcomeScreenTitle': MessageLookupByLibrary.simpleMessage('За покупками!')
   };
 }

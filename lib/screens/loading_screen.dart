@@ -23,7 +23,7 @@ class LoadingScreen extends StatelessWidget {
               child: Image.asset(image),
             ),
             ElevatedButton(
-              onPressed: () => context.goNamed(root),
+              onPressed: () => context.go(root),
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(theme.secondaryBgColor),
               ),

@@ -95,7 +95,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
       );
 
   void _editList(BuildContext content) {
-    context.goNamed(shoppingName,
+    context.pushNamed(shopping,
         extra: ShoppingScreenArgs(widget.shoppingList, editMode: true));
   }
 

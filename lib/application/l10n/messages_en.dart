@@ -75,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
     'noSavedListsTitle': MessageLookupByLibrary.simpleMessage('No saved shopping lists'),
     'noSavedProductsTitle': MessageLookupByLibrary.simpleMessage('No saved products'),
     'productsScreenTitle': MessageLookupByLibrary.simpleMessage('My Products'),
+    'settingsScreenTitle': MessageLookupByLibrary.simpleMessage('Settings'),
     'welcomeScreenTitle': MessageLookupByLibrary.simpleMessage('Go Shopping!')
   };
 }

@@ -34,6 +34,9 @@ class AppLocalizations {
   String get productsScreenTitle =>
       Intl.message('Мои продукты', name: 'productsScreenTitle');
 
+  String get settingsScreenTitle =>
+      Intl.message('Настройки', name: 'settingsScreenTitle');
+
   String get emptyNameError =>
       Intl.message('Введите название', name: 'emptyNameError');
 

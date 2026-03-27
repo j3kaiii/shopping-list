@@ -7,11 +7,12 @@ const itemsBoxName = 'itemsBox';
 const root = '/';
 const loading = '/loading';
 
-const shoppingName = 'shopping';
-const shoppingPath = shoppingName;
+const commonProducts = 'common_products';
+const shoppingProducts = 'shopping_products';
+const lists = 'lists';
+const shopping = 'shopping';
 
-const productsName = 'products';
-const productsPath = productsName;
+const createShoppingProduct = 'create_shopping_product';
+const createCommonProduct = 'create_common_product';
 
-const createName = 'create';
-const createPath = createName;
+const createList = 'create_list';

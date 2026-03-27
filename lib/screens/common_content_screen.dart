@@ -104,39 +104,48 @@ class CommonContentScreen extends StatelessWidget {
 
   Widget _buildMenu(BuildContext context) {
     final theme = context.theme;
-    return Container(
-      color: theme.secondaryBgColor,
-      child: SafeArea(
-          child: Padding(
-        padding: const EdgeInsetsGeometry.all(18.0),
-        child: Column(
-          children: [
-            _buildLogo(context),
-            _buildMenuButtom(context, 'Main', () => context.goNamed(root)),
-            _buildMenuButtom(
-              context,
-              'Products',
-              () => context.goNamed(productsName),
-            ),
-            _buildMenuButtom(context, 'Settings', () => context.goNamed(root)),
-          ],
-        ),
-      )),
+    final loc = context.loc;
+    return Builder(
+      builder: (menuContext) => Container(
+        color: theme.secondaryBgColor,
+        child: SafeArea(
+            child: Padding(
+          padding: const EdgeInsetsGeometry.all(18.0),
+          child: Column(
+            children: [
+              _buildLogo(context),
+              _buildMenuButtom(menuContext, loc.listsScreenTitle, root),
+              _buildMenuButtom(
+                  menuContext, loc.productsScreenTitle, commonProducts),
+              // _buildMenuButtom(menuContext, loc.settingsScreenTitle, root),
+            ],
+          ),
+        )),
+      ),
     );
   }
 
   Widget _buildMenuButtom(
     BuildContext context,
     String title,
-    void Function() onPressed,
+    String routeName,
   ) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: () => _goToRoute(context, routeName),
       child: Text(
         title,
         style: context.theme.buttonTextStyle,
       ),
     );
+  }
+
+  void _goToRoute(BuildContext context, String name) {
+    Scaffold.of(context).closeDrawer();
+    if (name == root) {
+      context.goNamed(name);
+    } else {
+      context.pushNamed(name);
+    }
   }
 
   Widget _buildLogo(BuildContext context) {

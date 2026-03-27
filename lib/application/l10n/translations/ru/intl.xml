@@ -4,6 +4,7 @@
   <string name="welcomeScreenTitle">За покупками!</string>
   <string name="listsScreenTitle">Мои списки</string>
   <string name="productsScreenTitle">Мои продукты</string>
+  <string name="settingsScreenTitle">Настройки</string>
   <string name="emptyNameError">Введите название</string>
   <string name="existNameError">Такое название уже есть</string>
   <string name="existProductError">Такой продукт уже есть</string>

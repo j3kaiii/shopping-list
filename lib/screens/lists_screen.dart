@@ -40,7 +40,7 @@ class _ListsScreenState extends State<ListsScreen> {
     final loc = context.loc;
     return CommonContentScreen(
       title: loc.listsScreenTitle,
-      onFABPressed: () => context.goNamed(createName,
+      onFABPressed: () => context.pushNamed(createList,
           extra: const CreateItemScreenArgs(ItemType.list)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

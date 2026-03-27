@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-03-05T23:19:42.751526",
+  "@@last_modified": "2026-03-27T15:07:15.327889",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -18,6 +18,11 @@
   },
   "productsScreenTitle": "Мои продукты",
   "@productsScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settingsScreenTitle": "Настройки",
+  "@settingsScreenTitle": {
     "type": "text",
     "placeholders": {}
   },

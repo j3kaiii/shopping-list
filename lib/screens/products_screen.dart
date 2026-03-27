@@ -30,10 +30,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final fromShopping = widget.shoppingList != null;
     return CommonContentScreen(
       title: context.loc.productsScreenTitle,
-      onFABPressed: () => context.goNamed(createName,
-          extra: CreateItemScreenArgs(ItemType.product, productBox: _box)),
+      onFABPressed: () => context.pushNamed(
+        fromShopping ? createShoppingProduct : createCommonProduct,
+        extra: CreateItemScreenArgs(ItemType.product, productBox: _box),
+      ),
+      showBackButton: fromShopping,
       child: FutureBuilder(
           future: Hive.openBox<Product>(productsBoxName),
           builder: (context, snapshot) {

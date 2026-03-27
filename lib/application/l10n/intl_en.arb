@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2026-03-05T23:20:55.175399",
+  "@@last_modified": "2026-03-27T15:08:10.530222",
   "applicationName": "Placeholder",
   "@applicationName": {
     "type": "text",
@@ -13,6 +13,11 @@
   },
   "listsScreenTitle": "My Lists",
   "@listsScreenTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settingsScreenTitle": "Settings",
+  "@settingsScreenTitle": {
     "type": "text",
     "placeholders": {}
   },
