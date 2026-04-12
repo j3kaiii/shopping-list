@@ -140,17 +140,37 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
   }
 
   Widget _buildProgress(BuildContext context) {
+    final totalItems = widget.shoppingList.items.length;
+    final purchasedItems = widget.shoppingList.items
+        .where((item) => item.isPurchased)
+        .length;
+
+    final progress = totalItems > 0 ? purchasedItems / totalItems : 0.0;
+    final percentage = (progress * 100).round();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text('12/20 items collected'), Text('60%')],
+            children: [
+              Text(
+                '$purchasedItems/$totalItems ${context.loc.itemsCollected}',
+                style: context.theme.subheaderTextStyle,
+              ),
+              Text(
+                '$percentage%',
+                style: context.theme.subheaderTextStyle?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
+          const SizedBox(height: 8),
           LinearProgressIndicator(
             color: context.theme.secondaryBgColor,
-            value: 0.6,
+            value: progress,
             minHeight: 8.0,
             borderRadius: BorderRadius.circular(4.0),
           ),
@@ -162,8 +182,16 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
   Widget _buildButton(BuildContext context) {
     return ElevatedButton(
       style: context.theme.titledButtonStyle,
-      onPressed: () {},
-      child: const Text('Continue shopping'),
+      onPressed: () {
+        context.pushNamed(
+          shopping,
+          extra: ShoppingScreenArgs(
+            widget.shoppingList,
+            editMode: false,
+          ),
+        );
+      },
+      child: Text(context.loc.continueShopping),
     );
   }
 

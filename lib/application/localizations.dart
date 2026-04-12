@@ -112,6 +112,25 @@ class AppLocalizations {
   String get deleteListDialogTitle =>
       Intl.message('Хотите удалить список?', name: 'deleteListDialogTitle');
 
+  String get itemsCollected =>
+      Intl.message('товаров куплено', name: 'itemsCollected');
+
+  String get continueShopping =>
+      Intl.message('Продолжить покупки', name: 'continueShopping');
+
+  String get removedFromList =>
+      Intl.message('удален из списка', name: 'removedFromList');
+
+  String get btnUndo => Intl.message('Отменить', name: 'btnUndo');
+
+  String get editProduct =>
+      Intl.message('Редактировать продукт', name: 'editProduct');
+
+  String get quantity => Intl.message('Количество', name: 'quantity');
+
+  String get noSavedListsYet =>
+      Intl.message('Списков пока нет', name: 'noSavedListsYet');
+
   String createItemTitle(ItemType type) => switch (type) {
         ItemType.list => createListTitle,
         ItemType.product => createProductTitle,

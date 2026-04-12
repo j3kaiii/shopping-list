@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-03-27T15:07:15.327889",
+  "@@last_modified": "2026-04-12T20:54:03.585096",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -158,6 +158,41 @@
   },
   "deleteListDialogTitle": "Хотите удалить список?",
   "@deleteListDialogTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "itemsCollected": "товаров куплено",
+  "@itemsCollected": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "continueShopping": "Продолжить покупки",
+  "@continueShopping": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "removedFromList": "удален из списка",
+  "@removedFromList": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnUndo": "Отменить",
+  "@btnUndo": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editProduct": "Редактировать продукт",
+  "@editProduct": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "quantity": "Количество",
+  "@quantity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noSavedListsYet": "Списков пока нет",
+  "@noSavedListsYet": {
     "type": "text",
     "placeholders": {}
   }

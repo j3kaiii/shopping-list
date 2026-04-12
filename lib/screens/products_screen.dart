@@ -122,7 +122,7 @@ class _ProductsContentState extends State<ProductsContent> {
   ) {
     final inList = _shoppingList?.containsProduct(item.id) ?? false;
     return Card.outlined(
-      color: inList ? theme.activeItemColor : Colors.white,
+      color: inList ? theme.activeItemColor : theme.primaryBgColor,
       child: InkWell(
         onTap: () => _onItemTap(item),
         child: Padding(

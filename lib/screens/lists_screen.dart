@@ -67,13 +67,16 @@ class _ListsScreenState extends State<ListsScreen> {
   }
 
   Widget _buildEmptyStab(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FittedBox(fit: BoxFit.contain, child: Icon(Icons.no_food)),
-          SizedBox(height: 50),
-          Text('Списков пока нет'),
+          const FittedBox(fit: BoxFit.contain, child: Icon(Icons.no_food)),
+          const SizedBox(height: 50),
+          Text(
+            context.loc.noSavedListsYet,
+            style: context.theme.hintTextStyle,
+          ),
         ],
       ),
     );

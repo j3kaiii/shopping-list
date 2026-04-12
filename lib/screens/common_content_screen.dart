@@ -56,10 +56,11 @@ class CommonContentScreen extends StatelessWidget {
   }
 
   Widget _buildBottomButton(BuildContext context) {
+    final theme = context.theme;
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.primaryBgColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: .1),
@@ -75,7 +76,7 @@ class CommonContentScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onBottomButtonPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF3B3BFF),
+              backgroundColor: theme.secondaryBgColor,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: RoundedRectangleBorder(

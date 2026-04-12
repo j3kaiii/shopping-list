@@ -160,5 +160,40 @@
   "@deleteListDialogTitle": {
     "type": "text",
     "placeholders": {}
+  },
+  "itemsCollected": "items collected",
+  "@itemsCollected": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "continueShopping": "Continue shopping",
+  "@continueShopping": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "removedFromList": "removed from list",
+  "@removedFromList": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnUndo": "Undo",
+  "@btnUndo": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editProduct": "Edit product",
+  "@editProduct": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "quantity": "Quantity",
+  "@quantity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noSavedListsYet": "No lists yet",
+  "@noSavedListsYet": {
+    "type": "text",
+    "placeholders": {}
   }
 }

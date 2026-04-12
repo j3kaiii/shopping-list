@@ -7,9 +7,52 @@ class ShoppingTheme {
   static final _dataDark = ShoppingThemeData(
     coloredBackground:
         const Color.fromARGB(255, 6, 67, 88).withValues(alpha: .9),
-    primaryBgColor: _Colors.greyLight,
-    secondaryBgColor: _Colors.blue,
+    primaryBgColor: const Color(0xFF1A1A1A),
+    secondaryBgColor: const Color(0xFF2D2D2D),
     textColor: Colors.white,
+    inputBorderColor: const Color(0xFF6366F1),
+    activeItemColor: const Color(0xFF4CAF50),
+    error: const Color(0xFFEF4444),
+    success: const Color(0xFF22C55E),
+    titleH1TextStyle: const TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+    titleH2TextStyle: const TextStyle(
+      color: Colors.white,
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+    ),
+    buttonTextStyle: const TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    defaultTextStyle: const TextStyle(
+      color: Colors.white,
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+    ),
+    hintTextStyle: const TextStyle(
+      color: Color(0xFF9CA3AF),
+      fontSize: 16,
+      fontWeight: FontWeight.normal,
+    ),
+    subheaderTextStyle: const TextStyle(
+      fontSize: 16,
+      color: Color(0xFF9CA3AF),
+    ),
+    labelTextStyle: const TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      color: Color(0xFF818CF8),
+      letterSpacing: 0.5,
+    ),
+    inputHintStyle: const TextStyle(
+      color: Color(0xFF6B7280),
+      fontSize: 16,
+    ),
   );
 
   static final main = CustomThemeDataSet(data: _data, dataDark: _dataDark);
@@ -26,11 +69,13 @@ class ShoppingTheme {
 class ShoppingThemeData extends CustomThemeData {
   factory ShoppingThemeData({
     Color? coloredBackground,
-    Color activeItemColor = Colors.green,
-    Color primaryBgColor = _Colors.greyLight,
-    Color secondaryBgColor = _Colors.blue,
-    Color textColor = _Colors.greyDark,
+    Color? activeItemColor,
+    Color? primaryBgColor,
+    Color? secondaryBgColor,
+    Color? textColor,
     Color? inputBorderColor,
+    Color? error,
+    Color? success,
     TextStyle? titleH1TextStyle,
     TextStyle? titleH2TextStyle,
     TextStyle? buttonTextStyle,
@@ -44,6 +89,13 @@ class ShoppingThemeData extends CustomThemeData {
   }) {
     coloredBackground ??=
         const Color.fromARGB(255, 218, 243, 244).withValues(alpha: .9);
+    activeItemColor ??= Colors.green;
+    primaryBgColor ??= _Colors.greyLight;
+    secondaryBgColor ??= _Colors.blue;
+    textColor ??= _Colors.greyDark;
+    inputBorderColor ??= const Color(0xFF3B3BFF);
+    error ??= Colors.red;
+    success ??= Colors.green;
 
     titleH1TextStyle ??= const TextStyle(
       fontSize: 32,
@@ -92,7 +144,7 @@ class ShoppingThemeData extends CustomThemeData {
       fontSize: 16,
     );
 
-    inputBorderColor ??= const Color(0xFF3B3BFF);
+    inputBorderColor = const Color(0xFF3B3BFF);
 
     titledButtonStyle ??= ButtonStyle(
         textStyle: const WidgetStatePropertyAll(TextStyle(
@@ -120,6 +172,8 @@ class ShoppingThemeData extends CustomThemeData {
       secondaryBgColor: secondaryBgColor,
       textColor: textColor,
       inputBorderColor: inputBorderColor,
+      error: error,
+      success: success,
       titleH1TextStyle: titleH1TextStyle,
       titleH2TextStyle: titleH2TextStyle,
       buttonTextStyle: buttonTextStyle,
@@ -140,6 +194,8 @@ class ShoppingThemeData extends CustomThemeData {
     required this.secondaryBgColor,
     required this.textColor,
     required this.inputBorderColor,
+    required this.error,
+    required this.success,
     required this.titleH1TextStyle,
     required this.titleH2TextStyle,
     required this.buttonTextStyle,
@@ -162,6 +218,10 @@ class ShoppingThemeData extends CustomThemeData {
   final Color? secondaryBgColor;
   final Color? textColor;
   final Color inputBorderColor;
+  // Цвет ошибки
+  final Color? error;
+  // Цвет успеха
+  final Color? success;
 
   final TextStyle? titleH1TextStyle;
   final TextStyle? titleH2TextStyle;
@@ -180,17 +240,23 @@ extension ShoppingThemeDataExtension on ShoppingThemeData {
   ThemeData theme() => ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF6366F1),
+          brightness: Brightness.light,
+        ),
       );
 
   ThemeData darkTheme() => ThemeData(
-        useMaterial3: false,
+        useMaterial3: true,
         brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF6366F1),
+          brightness: Brightness.dark,
+        ),
       );
 }
 
 class _Colors {
-  static const greenDark = Color(0xFF4F967A);
-  static const greenLight = Color.fromARGB(255, 0, 217, 0);
   static const greyLight = Color(0xFFF4F4F4);
   static const greyDark = Color.fromARGB(255, 112, 111, 111);
   static const white = Color.fromARGB(255, 245, 245, 245);
