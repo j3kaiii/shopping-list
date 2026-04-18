@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-04-12T20:54:03.585096",
+  "@@last_modified": "2026-04-18T09:41:00.959422",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -158,6 +158,11 @@
   },
   "deleteListDialogTitle": "Хотите удалить список?",
   "@deleteListDialogTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteProductDialogTitle": "Хотите удалить продукт?",
+  "@deleteProductDialogTitle": {
     "type": "text",
     "placeholders": {}
   },

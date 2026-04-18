@@ -6,14 +6,6 @@ part 'shopping_list_item.g.dart';
 
 const _uuid = Uuid();
 
-/// Типы единиц измерения для продуктов
-enum UnitType {
-  pieces, // штуки (по умолчанию)
-  kilograms, // килограммы
-  liters, // литры
-  meters // метры
-}
-
 /// Реализация продукта, добавленного в список покупок.
 @HiveType(typeId: 2)
 class ShoppingListItem extends HiveObject {
@@ -34,21 +26,7 @@ class ShoppingListItem extends HiveObject {
   // кол-во, объем или масса...
   // например: 2 буханки хлеба или 500 грамм соли.
   @HiveField(4)
-  int? quantity;
-  // тип единицы измерения (хранится как int для Hive)
-  @HiveField(5)
-  int? _unitTypeIndex;
-
-  int get safeQuantity => quantity ?? 1;
-
-  UnitType get unitType {
-    final index = _unitTypeIndex ?? 0;
-    return (index >= 0 && index < UnitType.values.length)
-        ? UnitType.values[index]
-        : UnitType.pieces;
-  }
-
-  set unitType(UnitType value) => _unitTypeIndex = value.index;
+  int quantity = 1;
 
   ShoppingListItem({
     String? id,
@@ -57,8 +35,7 @@ class ShoppingListItem extends HiveObject {
     this.isPurchased = false,
     this.quantity = 1,
     UnitType unitType = UnitType.pieces,
-  })  : id = id ?? _uuid.v4(),
-        _unitTypeIndex = unitType.index;
+  }) : id = id ?? _uuid.v4();
 
   static ShoppingListItem create(Product product, {int quantity = 1}) =>
       ShoppingListItem(
@@ -70,7 +47,6 @@ class ShoppingListItem extends HiveObject {
   ShoppingListItem copyWith({
     bool? isPurchased,
     int? quantity,
-    UnitType? unitType,
   }) {
     return ShoppingListItem(
       id: id,
@@ -78,7 +54,6 @@ class ShoppingListItem extends HiveObject {
       baseName: baseName,
       isPurchased: isPurchased ?? this.isPurchased,
       quantity: quantity ?? this.quantity,
-      unitType: unitType ?? this.unitType,
     );
   }
 }

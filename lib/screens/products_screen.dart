@@ -35,7 +35,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
       title: context.loc.productsScreenTitle,
       onFABPressed: () => context.pushNamed(
         fromShopping ? createShoppingProduct : createCommonProduct,
-        extra: CreateItemScreenArgs(ItemType.product, productBox: _box),
+        extra: CreateItemScreenArgs(
+          ItemType.product,
+          productBox: _box,
+          ownerList: widget.shoppingList?.id,
+        ),
       ),
       showBackButton: fromShopping,
       child: FutureBuilder(
@@ -152,9 +156,13 @@ class _ProductsContentState extends State<ProductsContent> {
     final listsBox = Hive.box<ShoppingList>(listsBoxName);
 
     if (list.containsProduct(item.id)) {
+      // Находим ShoppingListItem по baseProductId и удаляем его
+      final listItem = list.items.firstWhere(
+        (i) => i.baseProductId == item.id,
+      );
       final updatedList = list.removeProduct(item.id);
       listsBox.put(updatedList.id, updatedList);
-      shoppingItemsBox.delete(item.id);
+      shoppingItemsBox.delete(listItem.id);
     } else {
       final newListItem = ShoppingListItem.create(item);
       final updatedList = list.addProduct(newListItem);

@@ -112,6 +112,9 @@ class AppLocalizations {
   String get deleteListDialogTitle =>
       Intl.message('Хотите удалить список?', name: 'deleteListDialogTitle');
 
+  String get deleteProductDialogTitle =>
+      Intl.message('Хотите удалить продукт?', name: 'deleteProductDialogTitle');
+
   String get itemsCollected =>
       Intl.message('товаров куплено', name: 'itemsCollected');
 

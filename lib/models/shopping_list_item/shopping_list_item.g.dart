@@ -21,14 +21,14 @@ class ShoppingListItemAdapter extends TypeAdapter<ShoppingListItem> {
       baseProductId: fields[1] as String,
       baseName: fields[2] as String,
       isPurchased: fields[3] as bool,
-      quantity: fields[4] as int?,
-    ).._unitTypeIndex = fields[5] as int?;
+      quantity: fields[4] as int,
+    );
   }
 
   @override
   void write(BinaryWriter writer, ShoppingListItem obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,9 +38,7 @@ class ShoppingListItemAdapter extends TypeAdapter<ShoppingListItem> {
       ..writeByte(3)
       ..write(obj.isPurchased)
       ..writeByte(4)
-      ..write(obj.quantity)
-      ..writeByte(5)
-      ..write(obj._unitTypeIndex);
+      ..write(obj.quantity);
   }
 
   @override

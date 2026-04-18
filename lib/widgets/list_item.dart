@@ -20,13 +20,16 @@ class ListItem extends StatelessWidget {
     final theme = context.theme;
     return GestureDetector(
       onTap: onTap,
-      child: Card.outlined(
-        color: color,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            name,
-            style: isButton ? theme.buttonTextStyle : theme.defaultTextStyle,
+      child: SizedBox(
+        width: double.infinity,
+        child: Card.outlined(
+          color: color,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              name,
+              style: isButton ? theme.buttonTextStyle : theme.defaultTextStyle,
+            ),
           ),
         ),
       ),

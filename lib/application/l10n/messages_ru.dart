@@ -68,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     'createProductSubheader': MessageLookupByLibrary.simpleMessage('Добавьте продукт в свою цифровую кладовую'),
     'createProductTitle': MessageLookupByLibrary.simpleMessage('Добавить продукт'),
     'deleteListDialogTitle': MessageLookupByLibrary.simpleMessage('Хотите удалить список?'),
+    'deleteProductDialogTitle': MessageLookupByLibrary.simpleMessage('Хотите удалить продукт?'),
     'editProduct': MessageLookupByLibrary.simpleMessage('Редактировать продукт'),
     'emptyNameError': MessageLookupByLibrary.simpleMessage('Введите название'),
     'emptyShoppingListTitle': MessageLookupByLibrary.simpleMessage('Список покупок пуст'),

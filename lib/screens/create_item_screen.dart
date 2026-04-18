@@ -157,8 +157,8 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
       // сохранить все в бд
       if (currentShoppingList != null) {
         final newListItem = ShoppingListItem.create(newProduct);
-        currentShoppingList.addProduct(newListItem);
-        listsBox.put(currentShoppingList.id, currentShoppingList);
+        final updatedList = currentShoppingList.addProduct(newListItem);
+        listsBox.put(updatedList.id, updatedList);
         final shoppingItems = Hive.box<ShoppingListItem>(itemsBoxName);
         shoppingItems.put(newListItem.id, newListItem);
       }

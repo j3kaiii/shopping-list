@@ -68,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     'createProductSubheader': MessageLookupByLibrary.simpleMessage('Add an item to your digital pantry'),
     'createProductTitle': MessageLookupByLibrary.simpleMessage('Add New Product'),
     'deleteListDialogTitle': MessageLookupByLibrary.simpleMessage('Do you want to delete current list?'),
+    'deleteProductDialogTitle': MessageLookupByLibrary.simpleMessage('Do you want to delete current product?'),
     'editProduct': MessageLookupByLibrary.simpleMessage('Edit product'),
     'emptyNameError': MessageLookupByLibrary.simpleMessage('Enter name'),
     'emptyShoppingListTitle': MessageLookupByLibrary.simpleMessage('Shopping list is empty'),

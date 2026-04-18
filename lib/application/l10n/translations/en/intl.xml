@@ -32,6 +32,7 @@
   <string name="createProductExistError">Product exist</string>
   <string name="createListExistError">List exist</string>
   <string name="deleteListDialogTitle">Do you want to delete current list?</string>
+  <string name="deleteProductDialogTitle">Do you want to delete current product?</string>
   <string name="itemsCollected">items collected</string>
   <string name="continueShopping">Continue shopping</string>
   <string name="removedFromList">removed from list</string>

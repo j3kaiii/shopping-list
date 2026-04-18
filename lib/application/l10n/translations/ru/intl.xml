@@ -32,6 +32,7 @@
   <string name="createProductExistError">Такой продукт есть</string>
   <string name="createListExistError">Такой список есть</string>
   <string name="deleteListDialogTitle">Хотите удалить список?</string>
+  <string name="deleteProductDialogTitle">Хотите удалить продукт?</string>
   <string name="itemsCollected">товаров куплено</string>
   <string name="continueShopping">Продолжить покупки</string>
   <string name="removedFromList">удален из списка</string>
