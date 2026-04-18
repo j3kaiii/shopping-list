@@ -215,7 +215,7 @@ class ShoppingThemeData extends CustomThemeData {
   // Основной цвет фона
   final Color primaryBgColor;
   // Дополнительный цвет фона
-  final Color? secondaryBgColor;
+  final Color secondaryBgColor;
   final Color? textColor;
   final Color inputBorderColor;
   // Цвет ошибки
