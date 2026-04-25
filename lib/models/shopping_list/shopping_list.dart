@@ -71,6 +71,19 @@ class ShoppingList extends HiveObject {
     );
   }
 
+  ShoppingList updateItem(ShoppingListItem updatedItem) {
+    return ShoppingList(
+      id: id,
+      name: name,
+      items: items.map((item) {
+        if (item.baseProductId == updatedItem.baseProductId) {
+          return updatedItem;
+        }
+        return item;
+      }).toList(),
+    );
+  }
+
   /// Проверяет состояние покупки [ShoppingListItem] по id базового продукта.
   bool isProductPurchased(String productId) {
     return items

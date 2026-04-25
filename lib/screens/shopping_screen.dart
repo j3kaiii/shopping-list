@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_example/application/consts.dart';
 import 'package:shopping_list_example/application/localizations.dart';
+import 'package:shopping_list_example/blocs/screens/shopping_screen/shopping_screen_bloc.dart';
 import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
 import 'package:shopping_list_example/screens/common_content_screen.dart';
@@ -26,54 +27,53 @@ class ShoppingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shopping = shoppingArgs.shopping;
-    return CommonContentScreen(
-      title: shopping.name,
-      showBackButton: true,
-      actions: [
-        _buildEditToggleButton(context),
-        _buildResetButton(context),
-      ],
-      onFABPressed: () => context.pushNamed(shoppingProducts, extra: shopping),
-      child: FutureBuilder(
-        future: Hive.openBox<ShoppingListItem>(shopping.id),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            return ShoppingContent(
-              box: snapshot.data as Box<ShoppingListItem>,
-              list: shopping,
-              editMode: shoppingArgs.editMode,
-            );
-          } else {
-            return const CircularProgressIndicator();
-          }
-        }),
-      ),
+    return BlocProvider<ShoppingScreenBloc>(
+      create: (context) => ShoppingScreenBloc()
+        ..add(ShoppingShown(shoppingArgs.shopping, shoppingArgs.editMode)),
+      child: BlocBuilder<ShoppingScreenBloc, ShoppingScreenState>(
+          builder: (context, state) {
+        final isLoaded = state is ShoppingLoadSuccess;
+        final actions = isLoaded
+            ? [
+                _buildEditToggleButton(context, state.editMode),
+                _buildResetButton(context),
+              ]
+            : null;
+
+        return CommonContentScreen(
+          title: isLoaded ? state.shopping.name : '',
+          showBackButton: true,
+          actions: actions,
+          onFABPressed: () {
+            isLoaded
+                ? context.pushNamed(shoppingProducts,
+                    extra: shoppingArgs.shopping)
+                : null;
+          },
+          child: isLoaded
+              ? ShoppingContent(
+                  list: state.shopping,
+                  editMode: state.editMode,
+                )
+              : const CircularProgressIndicator(),
+        );
+      }),
     );
   }
 
-  Widget _buildEditToggleButton(BuildContext context) {
+  Widget _buildEditToggleButton(BuildContext context, bool editMode) {
     return IconButton(
       onPressed: () {
-        context.pushNamed(
-          shopping,
-          extra: ShoppingScreenArgs(
-            shoppingArgs.shopping,
-            editMode: !shoppingArgs.editMode,
-          ),
-        );
+        context.read<ShoppingScreenBloc>().add(const ShoppingToggleEditMode());
       },
-      icon: Icon(
-        shoppingArgs.editMode ? Icons.check : Icons.edit,
-      ),
+      icon: Icon(editMode ? Icons.check : Icons.edit),
     );
   }
 
   Widget _buildResetButton(BuildContext context) {
     return IconButton(
-      onPressed: () async {
-        // final box = await Hive.openBox<Product>(shopping.id);
-        // box.resetAllToUnpurchased();
+      onPressed: () {
+        context.read<ShoppingScreenBloc>().add(const ShoppingReset());
       },
       icon: Transform.flip(
         flipX: true,
@@ -87,12 +87,10 @@ class ShoppingScreen extends StatelessWidget {
 
 class ShoppingContent extends StatefulWidget {
   final ShoppingList list;
-  final Box<ShoppingListItem> box;
   final bool editMode;
 
   const ShoppingContent({
     super.key,
-    required this.box,
     required this.list,
     this.editMode = false,
   });
@@ -102,17 +100,13 @@ class ShoppingContent extends StatefulWidget {
 }
 
 class _ShoppingContentState extends State<ShoppingContent> {
-  late final Box<ShoppingListItem> _productsBox;
-
   @override
   void initState() {
     super.initState();
-    _productsBox = widget.box;
   }
 
   @override
   void dispose() {
-    _productsBox.close();
     super.dispose();
   }
 
@@ -150,40 +144,28 @@ class _ShoppingContentState extends State<ShoppingContent> {
                   child: const Icon(Icons.delete, color: Colors.white),
                 ),
                 dismissThresholds: const {DismissDirection.endToStart: 0.25},
-                confirmDismiss: (direction) => _confirmDelete(context),
-                onDismissed: (direction) {
-                  _removeItem(item.baseProductId);
-                },
+                confirmDismiss: (_) => _confirmDelete(context),
+                onDismissed: (_) => _removeItem(context, item),
                 child: ListItem(
                   name: item.baseName,
                   color: widget.editMode
                       ? null
-                      : (item.isPurchased ? theme.activeItemColor : null),
+                      : (item.isPurchased ? null : theme.activeItemColor),
                   onTap: widget.editMode
                       ? () => _showEditItemDialog(item, loc)
-                      : () => _onItemTap(item.baseProductId),
+                      : () => _onItemTap(context, item),
                 ),
               );
             },
           );
   }
 
-  void _onItemTap(String productId) {
-    widget.list.togglePurchaseStatus(productId);
-    setState(() {});
+  void _onItemTap(BuildContext context, ShoppingListItem item) {
+    context.read<ShoppingScreenBloc>().add(ShoppingItemStatusChanged(item));
   }
 
-  void _removeItem(String productId) {
-    final item = widget.list.items.firstWhere(
-      (i) => i.baseProductId == productId,
-    );
-    _productsBox.delete(item.id);
-
-    final updatedList = widget.list.removeProduct(productId);
-    final listsBox = Hive.box<ShoppingList>(listsBoxName);
-    listsBox.put(updatedList.id, updatedList);
-
-    setState(() {});
+  void _removeItem(BuildContext context, ShoppingListItem item) {
+    context.read<ShoppingScreenBloc>().add(ShoppingItemRemoved(item));
   }
 
   Future<bool> _confirmDelete(BuildContext context) async {
@@ -247,20 +229,11 @@ class _ShoppingContentState extends State<ShoppingContent> {
             onPressed: () {
               final newQuantity = int.tryParse(quantityController.text) ?? 1;
               final updatedItem = item.copyWith(quantity: newQuantity);
-              _productsBox.put(updatedItem.id, updatedItem);
-
-              final updatedList = widget.list;
-              final itemIndex = updatedList.items.indexWhere(
-                (i) => i.baseProductId == item.baseProductId,
-              );
-              if (itemIndex != -1) {
-                updatedList.items[itemIndex] = updatedItem;
-                final listsBox = Hive.box<ShoppingList>(listsBoxName);
-                listsBox.put(updatedList.id, updatedList);
-              }
+              context
+                  .read<ShoppingScreenBloc>()
+                  .add(ShoppingItemEdit(updatedItem));
 
               Navigator.pop(context);
-              setState(() {});
             },
             child: Text(loc.btnOk),
           ),
