@@ -24,6 +24,9 @@ class ProductsScreenBloc
   @override
   Future<void> close() {
     productsBox.listenable().removeListener(_onBoxChanged);
+    if (_shoppingList != null) {
+      listsBox.listenable().removeListener(_onBoxChanged);
+    }
     return super.close();
   }
 
@@ -31,9 +34,14 @@ class ProductsScreenBloc
     ProductsScreenStarted event,
     Emitter<ProductsScreenState> emit,
   ) async {
-    _shoppingList = event.shoppingList;
     productsBox = await Hive.openBox<Product>(productsBoxName);
     listsBox = Hive.box<ShoppingList>(listsBoxName);
+
+    final listId = event.shoppingListId;
+    if (listId != null) {
+      _shoppingList = listsBox.get(listId);
+      listsBox.listenable().addListener(_onBoxChanged);
+    }
 
     emit(ProductsScreenLoadSuccess(productsBox.values.toList(), _shoppingList));
 
@@ -45,7 +53,10 @@ class ProductsScreenBloc
     Emitter<ProductsScreenState> emit,
   ) {
     if (_shoppingList != null) {
-      _shoppingList = listsBox.get(_shoppingList!.id);
+      final updatedList = listsBox.get(_shoppingList!.id);
+      if (updatedList != null) {
+        _shoppingList = updatedList;
+      }
     }
     emit(ProductsScreenLoadSuccess(productsBox.values.toList(), _shoppingList));
   }

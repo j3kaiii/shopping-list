@@ -47,7 +47,7 @@ class ShoppingScreen extends StatelessWidget {
           onFABPressed: () {
             isLoaded
                 ? context.pushNamed(shoppingProducts,
-                    extra: shoppingArgs.shopping)
+                    extra: shoppingArgs.shopping.id)
                 : null;
           },
           child: isLoaded

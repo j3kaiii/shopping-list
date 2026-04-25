@@ -8,11 +8,11 @@ abstract class ProductsScreenEvent extends Equatable {
 }
 
 class ProductsScreenStarted extends ProductsScreenEvent {
-  final ShoppingList? shoppingList;
-  const ProductsScreenStarted(this.shoppingList);
+  final String? shoppingListId;
+  const ProductsScreenStarted(this.shoppingListId);
 
   @override
-  List<Object?> get props => [shoppingList];
+  List<Object?> get props => [shoppingListId];
 }
 
 // Событие добавления/удаления продукта в списке покупок.

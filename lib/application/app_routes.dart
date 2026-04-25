@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
 import 'package:shopping_list_example/screens/create_item_screen.dart';
 import 'package:shopping_list_example/screens/lists_screen.dart';
 import 'package:shopping_list_example/screens/loading_screen.dart';
@@ -41,7 +40,7 @@ GoRoute _createProductsRoute(String route, {bool common = true}) => GoRoute(
         path: route,
         name: route,
         builder: (context, state) => ProductsScreen(
-              shoppingList: state.extra as ShoppingList?,
+              shoppingListId: state.extra as String?,
             ),
         routes: [
           _createItemRoute(common ? createCommonProduct : createShoppingProduct)

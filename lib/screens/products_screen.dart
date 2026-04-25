@@ -12,18 +12,18 @@ import 'package:shopping_list_example/utils/context_extension.dart';
 import 'package:shopping_list_example/widgets/stub.dart';
 
 class ProductsScreen extends StatelessWidget {
-  final ShoppingList? shoppingList;
-  const ProductsScreen({this.shoppingList, super.key});
+  final String? shoppingListId;
+  const ProductsScreen({this.shoppingListId, super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ProductsScreenBloc>(
       create: (context) =>
-          ProductsScreenBloc()..add(ProductsScreenStarted(shoppingList)),
+          ProductsScreenBloc()..add(ProductsScreenStarted(shoppingListId)),
       child: BlocBuilder<ProductsScreenBloc, ProductsScreenState>(
           builder: (context, state) {
         final isLoaded = state is ProductsScreenLoadSuccess;
-        final fromShopping = shoppingList != null;
+        final fromShopping = shoppingListId != null;
         final bloc = context.read<ProductsScreenBloc>();
 
         return CommonContentScreen(
@@ -33,7 +33,7 @@ class ProductsScreen extends StatelessWidget {
             extra: CreateItemScreenArgs(
               ItemType.product,
               productBox: isLoaded ? bloc.productsBox : null,
-              ownerList: shoppingList?.id,
+              ownerList: shoppingListId,
             ),
           ),
           showBackButton: fromShopping,

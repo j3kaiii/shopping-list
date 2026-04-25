@@ -56,4 +56,9 @@ class ShoppingListItem extends HiveObject {
       quantity: quantity ?? this.quantity,
     );
   }
+
+  @override
+  String toString() =>
+      'ShoppingListItem: {id: $id, baseProductId: $baseProductId '
+      'baseName: $baseName, isPurchased: $isPurchased, quantity: $quantity}';
 }
