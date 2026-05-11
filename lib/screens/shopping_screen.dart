@@ -156,6 +156,7 @@ class _ShoppingContentState extends State<ShoppingContent> {
           onDismissed: (_) => _removeItem(context, item),
           child: ListItem(
             name: item.baseName,
+            quantity: item.quantity,
             color: widget.editMode
                 ? null
                 : (item.isPurchased ? null : theme.activeItemColor),

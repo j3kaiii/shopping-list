@@ -130,7 +130,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
     final productsBox = widget.args.productBox;
     if (productsBox == null) {
       // TODO: возможна ли такая ситуация?
-      // Показать предупреждение?
+      // Добавить логирование
       return;
     }
     if (productsBox.values
@@ -146,15 +146,10 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
     if (ownerListId != null) {
       final listsBox = Hive.box<ShoppingList>(listsBoxName);
       final currentShoppingList = listsBox.get(ownerListId);
-      // Так как это новый созданный продукт,
-      // то в списке его не должно быть.
-      // TODO: стоит добавить в попапе галочку с текстом:
-      // "добавить в текущий список покупок"
       if (currentShoppingList?.containsProduct(newProduct.id) ?? false) {
-        // какая-то ошибка
+        // TODO: какая-то ошибка
+        // Добавить логирование
       }
-      // добавить новый айтем в список,
-      // сохранить все в бд
       if (currentShoppingList != null) {
         final newListItem = ShoppingListItem.create(newProduct);
         final updatedList = currentShoppingList.addProduct(newListItem);
