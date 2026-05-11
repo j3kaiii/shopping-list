@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shopping_list_example/application/app_routes.dart';
-import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/application/localizations.dart';
-import 'package:shopping_list_example/application/theme.dart';
-import 'package:shopping_list_example/models/product/product.dart';
-import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
-import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
+import 'package:go_shopping/application/app_routes.dart';
+import 'package:go_shopping/application/consts.dart';
+import 'package:go_shopping/application/localizations.dart';
+import 'package:go_shopping/application/theme.dart';
+import 'package:go_shopping/models/product/product.dart';
+import 'package:go_shopping/models/shopping_list/shopping_list.dart';
+import 'package:go_shopping/models/shopping_list_item/shopping_list_item.dart';
 
 class ShoppingApp extends StatelessWidget {
   static final List<LocalizationsDelegate<dynamic>> _localizationsDelegates = [

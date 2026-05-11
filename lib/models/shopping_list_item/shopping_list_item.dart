@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:shopping_list_example/models/product/product.dart';
+import 'package:go_shopping/models/product/product.dart';
 import 'package:uuid/uuid.dart';
 
 part 'shopping_list_item.g.dart';

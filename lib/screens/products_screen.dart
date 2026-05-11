@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/application/theme.dart';
-import 'package:shopping_list_example/blocs/screens/products_screen/products_screen_bloc.dart';
-import 'package:shopping_list_example/models/product/product.dart';
-import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
-import 'package:shopping_list_example/screens/common_content_screen.dart';
-import 'package:shopping_list_example/screens/create_item_screen.dart';
-import 'package:shopping_list_example/utils/context_extension.dart';
-import 'package:shopping_list_example/widgets/stub.dart';
+import 'package:go_shopping/application/consts.dart';
+import 'package:go_shopping/application/theme.dart';
+import 'package:go_shopping/blocs/screens/products_screen/products_screen_bloc.dart';
+import 'package:go_shopping/models/product/product.dart';
+import 'package:go_shopping/models/shopping_list/shopping_list.dart';
+import 'package:go_shopping/screens/common_content_screen.dart';
+import 'package:go_shopping/screens/create_item_screen.dart';
+import 'package:go_shopping/utils/context_extension.dart';
+import 'package:go_shopping/widgets/stub.dart';
 
 class ProductsScreen extends StatelessWidget {
   final String? shoppingListId;

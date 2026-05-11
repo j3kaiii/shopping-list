@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
+import 'package:go_shopping/models/shopping_list_item/shopping_list_item.dart';
 import 'package:uuid/v4.dart';
 
 part 'shopping_list.g.dart';

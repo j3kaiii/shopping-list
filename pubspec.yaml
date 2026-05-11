@@ -1,4 +1,4 @@
-name: shopping_list_example
+name: go_shopping
 description: "Shopping list application"
 publish_to: 'none'
 

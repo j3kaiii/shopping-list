@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/application/localizations.dart';
-import 'package:shopping_list_example/blocs/screens/shopping_screen/shopping_screen_bloc.dart';
-import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
-import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
-import 'package:shopping_list_example/screens/common_content_screen.dart';
-import 'package:shopping_list_example/utils/context_extension.dart';
-import 'package:shopping_list_example/widgets/list_item.dart';
-import 'package:shopping_list_example/widgets/stub.dart';
+import 'package:go_shopping/application/consts.dart';
+import 'package:go_shopping/application/localizations.dart';
+import 'package:go_shopping/blocs/screens/shopping_screen/shopping_screen_bloc.dart';
+import 'package:go_shopping/models/shopping_list/shopping_list.dart';
+import 'package:go_shopping/models/shopping_list_item/shopping_list_item.dart';
+import 'package:go_shopping/screens/common_content_screen.dart';
+import 'package:go_shopping/utils/context_extension.dart';
+import 'package:go_shopping/widgets/list_item.dart';
+import 'package:go_shopping/widgets/stub.dart';
 
 class ShoppingScreenArgs {
   final ShoppingList shopping;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list_example/utils/context_extension.dart';
+import 'package:go_shopping/utils/context_extension.dart';
 
 class Stub extends StatelessWidget {
   final String text;

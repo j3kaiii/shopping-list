@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multiple_localization/multiple_localization.dart';
-import 'package:shopping_list_example/application/l10n/messages_all_locales.dart';
-import 'package:shopping_list_example/screens/create_item_screen.dart';
+import 'package:go_shopping/application/l10n/messages_all_locales.dart';
+import 'package:go_shopping/screens/create_item_screen.dart';
 
 typedef DelegateBuilder<T> = FutureOr<T> Function(String locale);
 

@@ -1,3 +1,3 @@
-import 'package:shopping_list_example/application/app.dart';
+import 'package:go_shopping/application/app.dart';
 
 void main() => runWithHive();

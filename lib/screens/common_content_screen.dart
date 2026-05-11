@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/utils/context_extension.dart';
+import 'package:go_shopping/application/consts.dart';
+import 'package:go_shopping/utils/context_extension.dart';
 
 class CommonContentScreen extends StatelessWidget {
   final String title;

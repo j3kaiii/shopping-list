@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/models/product/product.dart';
-import 'package:shopping_list_example/models/shopping_list/shopping_list.dart';
-import 'package:shopping_list_example/models/shopping_list_item/shopping_list_item.dart';
+import 'package:go_shopping/application/consts.dart';
+import 'package:go_shopping/models/product/product.dart';
+import 'package:go_shopping/models/shopping_list/shopping_list.dart';
+import 'package:go_shopping/models/shopping_list_item/shopping_list_item.dart';
 
 part 'products_screen_event.dart';
 part 'products_screen_state.dart';

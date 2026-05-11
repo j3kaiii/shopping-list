@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:shopping_list_example/application/consts.dart';
-import 'package:shopping_list_example/screens/create_item_screen.dart';
-import 'package:shopping_list_example/screens/lists_screen.dart';
-import 'package:shopping_list_example/screens/loading_screen.dart';
-import 'package:shopping_list_example/screens/products_screen.dart';
-import 'package:shopping_list_example/screens/shopping_screen.dart';
+import 'package:go_shopping/application/consts.dart';
+import 'package:go_shopping/screens/create_item_screen.dart';
+import 'package:go_shopping/screens/lists_screen.dart';
+import 'package:go_shopping/screens/loading_screen.dart';
+import 'package:go_shopping/screens/products_screen.dart';
+import 'package:go_shopping/screens/shopping_screen.dart';
 
 final appRoutes = GoRouter(
   initialLocation: loading,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list_example/application/theme.dart';
-import 'package:shopping_list_example/utils/context_extension.dart';
+import 'package:go_shopping/application/theme.dart';
+import 'package:go_shopping/utils/context_extension.dart';
 
 class ListItem extends StatelessWidget {
   final String name;
