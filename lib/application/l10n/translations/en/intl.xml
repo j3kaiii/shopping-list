@@ -16,6 +16,7 @@
   <string name="btnOk">OK</string>
   <string name="btnEdit">Edit</string>
   <string name="btnDelete">Delete</string>
+  <string name="btnReset">Reset</string>
   <string name="hintCreateName">Come up with a name</string>
   <string name="createListTitle">Create New List</string>
   <string name="createListBottomButton">Create List</string>
@@ -40,4 +41,7 @@
   <string name="editProduct">Edit product</string>
   <string name="quantity">Quantity</string>
   <string name="noSavedListsYet">No lists yet</string>
+  <string name="resetProgressDialogTitle">Do you want to reset the progress?</string>
+  <string name="congratulationsTitle">Congratulations!</string>
+  <string name="allItemsPurchasedMessage">All items purchased! Do you want to reset the progress?</string>
 </resources>

@@ -61,6 +61,7 @@ class AppLocalizations {
   String get btnOk => Intl.message('OK', name: 'btnOk');
   String get btnEdit => Intl.message('Редактировать', name: 'btnEdit');
   String get btnDelete => Intl.message('Удалить', name: 'btnDelete');
+  String get btnReset => Intl.message('Сбросить', name: 'btnReset');
   String get hintCreateName =>
       Intl.message('Придумайте название', name: 'hintCreateName');
 
@@ -133,6 +134,17 @@ class AppLocalizations {
 
   String get noSavedListsYet =>
       Intl.message('Списков пока нет', name: 'noSavedListsYet');
+
+  String get resetProgressDialogTitle =>
+      Intl.message('Хотите сбросить прогресс?',
+          name: 'resetProgressDialogTitle');
+
+  String get congratulationsTitle =>
+      Intl.message('Поздравляем!', name: 'congratulationsTitle');
+
+  String get allItemsPurchasedMessage =>
+      Intl.message('Все товары куплены! Хотите сбросить прогресс?',
+          name: 'allItemsPurchasedMessage');
 
   String createItemTitle(ItemType type) => switch (type) {
         ItemType.list => createListTitle,

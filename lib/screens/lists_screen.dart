@@ -54,6 +54,20 @@ class _ListsScreenState extends State<ListsScreen> {
       valueListenable: _listsBox.listenable(),
       builder: ((context, value, _) {
         final lists = value.values.toList();
+
+        lists.sort((a, b) {
+          final progressA = a.items.isEmpty
+              ? 0.0
+              : a.items.where((i) => i.isPurchased).length / a.items.length;
+          final progressB = b.items.isEmpty
+              ? 0.0
+              : b.items.where((i) => i.isPurchased).length / b.items.length;
+
+          if (progressA == 1.0 && progressB != 1.0) return 1;
+          if (progressB == 1.0 && progressA != 1.0) return -1;
+          return 0;
+        });
+
         final count = lists.length;
 
         return lists.isEmpty

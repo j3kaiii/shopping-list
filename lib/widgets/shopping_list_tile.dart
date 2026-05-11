@@ -17,7 +17,7 @@ class ShoppingListTile extends StatefulWidget {
 class _ShoppingListTileState extends State<ShoppingListTile> {
   static const _singleActionWidth = 45.0;
   static const _actionsHeight = 45.0;
-  static const _doubleActionWidth = 100.0;
+  static const _doubleActionWidth = 150.0;
   bool _showFullActions = false;
 
   @override
@@ -82,13 +82,18 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
+            onPressed: () => _deleteList(context),
+            icon: const Icon(Icons.delete),
+            padding: EdgeInsets.zero,
+          ),
+          IconButton(
             onPressed: () => _editList(context),
             icon: const Icon(Icons.edit),
             padding: EdgeInsets.zero,
           ),
           IconButton(
-            onPressed: () => _deleteList(context),
-            icon: const Icon(Icons.delete),
+            onPressed: () => _resetList(context),
+            icon: const Icon(Icons.refresh),
             padding: EdgeInsets.zero,
           ),
         ],
@@ -97,6 +102,32 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
   void _editList(BuildContext content) {
     context.pushNamed(shopping,
         extra: ShoppingScreenArgs(widget.shoppingList, editMode: true));
+  }
+
+  Future<void> _resetList(BuildContext context) async {
+    final loc = context.loc;
+    final res = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(loc.resetProgressDialogTitle),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(loc.btnCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(loc.btnReset),
+          ),
+        ],
+      ),
+    );
+    if (res == true) {
+      final box = Hive.box<ShoppingList>(listsBoxName);
+      final list = widget.shoppingList;
+      final resetList = list.resetAllPurchases();
+      await box.put(list.id, resetList);
+    }
   }
 
   Future<void> _deleteList(BuildContext context) async {
@@ -141,9 +172,8 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
 
   Widget _buildProgress(BuildContext context) {
     final totalItems = widget.shoppingList.items.length;
-    final purchasedItems = widget.shoppingList.items
-        .where((item) => item.isPurchased)
-        .length;
+    final purchasedItems =
+        widget.shoppingList.items.where((item) => item.isPurchased).length;
 
     final progress = totalItems > 0 ? purchasedItems / totalItems : 0.0;
     final percentage = (progress * 100).round();

@@ -16,6 +16,7 @@
   <string name="btnOk">OK</string>
   <string name="btnEdit">Редактировать</string>
   <string name="btnDelete">Удалить</string>
+  <string name="btnReset">Сбросить</string>
   <string name="hintCreateName">Придумайте название</string>
   <string name="createListTitle">Создать список</string>
   <string name="createListBottomButton">Создать список</string>
@@ -40,4 +41,7 @@
   <string name="editProduct">Редактировать продукт</string>
   <string name="quantity">Количество</string>
   <string name="noSavedListsYet">Списков пока нет</string>
+  <string name="resetProgressDialogTitle">Хотите сбросить прогресс?</string>
+  <string name="congratulationsTitle">Поздравляем!</string>
+  <string name="allItemsPurchasedMessage">Все товары куплены! Хотите сбросить прогресс?</string>
 </resources>

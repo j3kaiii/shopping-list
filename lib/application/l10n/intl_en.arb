@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2026-04-18T09:42:22.331877",
+  "@@last_modified": "2026-05-11T08:27:44.299009",
   "applicationName": "Placeholder",
   "@applicationName": {
     "type": "text",
@@ -78,6 +78,11 @@
   },
   "btnDelete": "Delete",
   "@btnDelete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnReset": "Reset",
+  "@btnReset": {
     "type": "text",
     "placeholders": {}
   },
@@ -198,6 +203,21 @@
   },
   "noSavedListsYet": "No lists yet",
   "@noSavedListsYet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resetProgressDialogTitle": "Do you want to reset the progress?",
+  "@resetProgressDialogTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "congratulationsTitle": "Congratulations!",
+  "@congratulationsTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "allItemsPurchasedMessage": "All items purchased! Do you want to reset the progress?",
+  "@allItemsPurchasedMessage": {
     "type": "text",
     "placeholders": {}
   }

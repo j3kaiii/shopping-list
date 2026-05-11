@@ -126,42 +126,93 @@ class _ShoppingContentState extends State<ShoppingContent> {
   Widget _buildList(BuildContext context, AppLocalizations loc) {
     final theme = context.theme;
     final items = widget.list.items;
-    return items.isEmpty
-        ? Stub(loc.emptyShoppingListTitle)
-        : ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final item = items[index];
-              return Dismissible(
-                key: Key(item.id),
-                direction: widget.editMode
-                    ? DismissDirection.endToStart
-                    : DismissDirection.none,
-                background: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 16),
-                  child: const Icon(Icons.delete, color: Colors.white),
-                ),
-                dismissThresholds: const {DismissDirection.endToStart: 0.25},
-                confirmDismiss: (_) => _confirmDelete(context),
-                onDismissed: (_) => _removeItem(context, item),
-                child: ListItem(
-                  name: item.baseName,
-                  color: widget.editMode
-                      ? null
-                      : (item.isPurchased ? null : theme.activeItemColor),
-                  onTap: widget.editMode
-                      ? () => _showEditItemDialog(item, loc)
-                      : () => _onItemTap(context, item),
-                ),
-              );
-            },
-          );
+    if (items.isEmpty) {
+      return Stub(loc.emptyShoppingListTitle);
+    }
+
+    final sortedItems = List<ShoppingListItem>.from(items)
+      ..sort((a, b) {
+        if (a.isPurchased == b.isPurchased) return 0;
+        return a.isPurchased ? 1 : -1;
+      });
+
+    return ListView.builder(
+      itemCount: sortedItems.length,
+      itemBuilder: (context, index) {
+        final item = sortedItems[index];
+        return Dismissible(
+          key: Key(item.id),
+          direction: widget.editMode
+              ? DismissDirection.endToStart
+              : DismissDirection.none,
+          background: Container(
+            color: Colors.red,
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(right: 16),
+            child: const Icon(Icons.delete, color: Colors.white),
+          ),
+          dismissThresholds: const {DismissDirection.endToStart: 0.25},
+          confirmDismiss: (_) => _confirmDelete(context),
+          onDismissed: (_) => _removeItem(context, item),
+          child: ListItem(
+            name: item.baseName,
+            color: widget.editMode
+                ? null
+                : (item.isPurchased ? null : theme.activeItemColor),
+            onTap: widget.editMode
+                ? () => _showEditItemDialog(item, loc)
+                : () => _onItemTap(context, item),
+          ),
+        );
+      },
+    );
   }
 
+  bool _hasShownDialog = false;
+
   void _onItemTap(BuildContext context, ShoppingListItem item) {
+    _hasShownDialog = false;
     context.read<ShoppingScreenBloc>().add(ShoppingItemStatusChanged(item));
+  }
+
+  @override
+  void didUpdateWidget(ShoppingContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!_hasShownDialog && widget.list.items.isNotEmpty) {
+      final hasUnpurchased = widget.list.items.any((i) => !i.isPurchased);
+      if (!hasUnpurchased) {
+        _hasShownDialog = true;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            _showAllPurchasedDialog(context);
+          }
+        });
+      }
+    }
+  }
+
+  void _showAllPurchasedDialog(BuildContext context) {
+    final loc = context.loc;
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(loc.congratulationsTitle),
+        content: Text(loc.allItemsPurchasedMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(loc.btnCancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              context.read<ShoppingScreenBloc>().add(const ShoppingReset());
+              Navigator.of(dialogContext).pop();
+            },
+            child: Text(loc.btnReset),
+          ),
+        ],
+      ),
+    );
   }
 
   void _removeItem(BuildContext context, ShoppingListItem item) {

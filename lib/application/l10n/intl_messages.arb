@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-04-18T09:41:00.959422",
+  "@@last_modified": "2026-05-11T08:25:04.744046",
   "applicationName": "Рабочее название",
   "@applicationName": {
     "type": "text",
@@ -78,6 +78,11 @@
   },
   "btnDelete": "Удалить",
   "@btnDelete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnReset": "Сбросить",
+  "@btnReset": {
     "type": "text",
     "placeholders": {}
   },
@@ -198,6 +203,21 @@
   },
   "noSavedListsYet": "Списков пока нет",
   "@noSavedListsYet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resetProgressDialogTitle": "Хотите сбросить прогресс?",
+  "@resetProgressDialogTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "congratulationsTitle": "Поздравляем!",
+  "@congratulationsTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "allItemsPurchasedMessage": "Все товары куплены! Хотите сбросить прогресс?",
+  "@allItemsPurchasedMessage": {
     "type": "text",
     "placeholders": {}
   }

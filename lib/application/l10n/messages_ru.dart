@@ -45,13 +45,16 @@ class MessageLookup extends MessageLookupByLibrary {
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
   static Map<String, dynamic> _notInlinedMessages(_) => {
-      'applicationName': MessageLookupByLibrary.simpleMessage('Рабочее название'),
+      'allItemsPurchasedMessage': MessageLookupByLibrary.simpleMessage('Все товары куплены! Хотите сбросить прогресс?'),
+    'applicationName': MessageLookupByLibrary.simpleMessage('Рабочее название'),
     'btnAdd': MessageLookupByLibrary.simpleMessage('Добавить'),
     'btnCancel': MessageLookupByLibrary.simpleMessage('Отменить'),
     'btnDelete': MessageLookupByLibrary.simpleMessage('Удалить'),
     'btnEdit': MessageLookupByLibrary.simpleMessage('Редактировать'),
     'btnOk': MessageLookupByLibrary.simpleMessage('OK'),
+    'btnReset': MessageLookupByLibrary.simpleMessage('Сбросить'),
     'btnUndo': MessageLookupByLibrary.simpleMessage('Отменить'),
+    'congratulationsTitle': MessageLookupByLibrary.simpleMessage('Поздравляем!'),
     'continueShopping': MessageLookupByLibrary.simpleMessage('Продолжить покупки'),
     'createListBottomButton': MessageLookupByLibrary.simpleMessage('Создать список'),
     'createListExistError': MessageLookupByLibrary.simpleMessage('Такой список есть'),
@@ -83,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
     'productsScreenTitle': MessageLookupByLibrary.simpleMessage('Мои продукты'),
     'quantity': MessageLookupByLibrary.simpleMessage('Количество'),
     'removedFromList': MessageLookupByLibrary.simpleMessage('удален из списка'),
+    'resetProgressDialogTitle': MessageLookupByLibrary.simpleMessage('Хотите сбросить прогресс?'),
     'settingsScreenTitle': MessageLookupByLibrary.simpleMessage('Настройки'),
     'welcomeScreenTitle': MessageLookupByLibrary.simpleMessage('За покупками!')
   };
