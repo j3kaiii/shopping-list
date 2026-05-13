@@ -6,12 +6,14 @@ class ListItem extends StatelessWidget {
   final String name;
   final int? quantity;
   final Color? color;
+  final TextStyle? textStyle;
   final bool isButton;
   final VoidCallback? onTap;
 
   const ListItem({
     super.key,
     required this.name,
+    required this.textStyle,
     this.quantity,
     this.color,
     this.onTap,
@@ -34,9 +36,7 @@ class ListItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     name,
-                    style: isButton
-                        ? theme.buttonTextStyle
-                        : theme.defaultTextStyle,
+                    style: isButton ? theme.buttonTextStyle : textStyle,
                   ),
                 ),
                 if (quantity != null && quantity! > 0)

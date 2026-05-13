@@ -66,16 +66,19 @@ class ProductsContent extends StatelessWidget {
 
     return products.isEmpty
         ? Stub(loc.noSavedProductsTitle)
-        : ListView.builder(
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              final item = products[index];
-              return _ProductItem(
-                product: item,
-                inList: shoppingList?.containsProduct(item.id) ?? false,
-                theme: theme,
-              );
-            },
+        : Padding(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 6.0),
+            child: ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final item = products[index];
+                return _ProductItem(
+                  product: item,
+                  inList: shoppingList?.containsProduct(item.id) ?? false,
+                  theme: theme,
+                );
+              },
+            ),
           );
   }
 }

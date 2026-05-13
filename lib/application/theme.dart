@@ -7,8 +7,8 @@ class ShoppingTheme {
   static final _dataDark = ShoppingThemeData(
     coloredBackground:
         const Color.fromARGB(255, 6, 67, 88).withValues(alpha: .9),
-    primaryBgColor: const Color(0xFF1A1A1A),
-    secondaryBgColor: const Color(0xFF2D2D2D),
+    primaryBgColor: const Color.fromARGB(255, 32, 52, 73),
+    // secondaryBgColor: const Color(0xFF2D2D2D),
     textColor: Colors.white,
     inputBorderColor: const Color(0xFF6366F1),
     activeItemColor: const Color(0xFF4CAF50),
@@ -30,6 +30,11 @@ class ShoppingTheme {
       fontWeight: FontWeight.bold,
     ),
     defaultTextStyle: const TextStyle(
+      color: Colors.black,
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+    ),
+    purchasedTextStyle: const TextStyle(
       color: Colors.white,
       fontSize: 18,
       fontWeight: FontWeight.normal,
@@ -80,6 +85,7 @@ class ShoppingThemeData extends CustomThemeData {
     TextStyle? titleH2TextStyle,
     TextStyle? buttonTextStyle,
     TextStyle? defaultTextStyle,
+    TextStyle? purchasedTextStyle,
     TextStyle? hintTextStyle,
     TextStyle? subheaderTextStyle,
     TextStyle? labelTextStyle,
@@ -116,6 +122,12 @@ class ShoppingThemeData extends CustomThemeData {
     );
 
     defaultTextStyle ??= const TextStyle(
+      color: _Colors.black,
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+    );
+
+    purchasedTextStyle ??= const TextStyle(
       color: _Colors.black,
       fontSize: 18,
       fontWeight: FontWeight.normal,
@@ -178,6 +190,7 @@ class ShoppingThemeData extends CustomThemeData {
       titleH2TextStyle: titleH2TextStyle,
       buttonTextStyle: buttonTextStyle,
       defaultTextStyle: defaultTextStyle,
+      purchasedTextStyle: purchasedTextStyle,
       hintTextStyle: hintTextStyle,
       subheaderTextStyle: subheaderTextStyle,
       labelTextStyle: labelTextStyle,
@@ -200,6 +213,7 @@ class ShoppingThemeData extends CustomThemeData {
     required this.titleH2TextStyle,
     required this.buttonTextStyle,
     required this.defaultTextStyle,
+    required this.purchasedTextStyle,
     required this.hintTextStyle,
     required this.subheaderTextStyle,
     required this.labelTextStyle,
@@ -227,6 +241,7 @@ class ShoppingThemeData extends CustomThemeData {
   final TextStyle? titleH2TextStyle;
   final TextStyle? buttonTextStyle;
   final TextStyle? defaultTextStyle;
+  final TextStyle? purchasedTextStyle;
   final TextStyle? hintTextStyle;
   final TextStyle? subheaderTextStyle;
   final TextStyle? labelTextStyle;

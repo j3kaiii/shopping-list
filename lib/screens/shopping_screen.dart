@@ -157,6 +157,9 @@ class _ShoppingContentState extends State<ShoppingContent> {
           child: ListItem(
             name: item.baseName,
             quantity: item.quantity,
+            textStyle: item.isPurchased
+                ? theme.purchasedTextStyle
+                : theme.defaultTextStyle,
             color: widget.editMode
                 ? null
                 : (item.isPurchased ? null : theme.activeItemColor),

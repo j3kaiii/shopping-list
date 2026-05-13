@@ -74,10 +74,6 @@ class _LoadingScreenState extends State<LoadingScreen>
                 children: [
                   Container(
                     padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: theme.secondaryBgColor.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
                     child: Image.asset(
                       image,
                       width: 250,
